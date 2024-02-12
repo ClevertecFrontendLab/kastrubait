@@ -1,16 +1,50 @@
-import { Layout } from 'antd';
+import React from 'react';
+import { Layout, Menu, Button } from 'antd';
+import { Logo } from '@components/sidebar/logo/logo';
 
-// type ISideBar = {
-//     mobileView: boolean;
-//     collapsed: boolean;
-//     setCollapsed: (collapsed: boolean) => void;
-// };
+import { ExitBtn } from './ExitBtn/exitBtn';
 
-// export const SideBar = ({ mobileVew, collapsed, setCollapsed }: ISideBar) => {
-export const SideBar = () => {
+import { SIDER_MENU } from '@constants/index';
+
+import s from './sider.module.scss';
+
+type ISideBar = {
+    mobileView: boolean;
+    collapsed: boolean;
+    setCollapsed: (collapsed: boolean) => void;
+};
+
+const { Sider } = Layout;
+
+export const SideBar = ({ mobileView, collapsed, setCollapsed }: ISideBar) => {
     return (
-        <Layout>
+        <Sider
+            trigger={null}
+            collapsible
+            theme={'light'}
+            collapsed={collapsed}
+            className={s.sider_content}
+            width={mobileView ? 106 : 208}
+            collapsedWidth={mobileView ? 1 : 64}
+        >
 
-        </Layout>
+            <Logo collapsed={collapsed} mobileView={ mobileView} />
+
+            <Menu
+                theme="light"
+                mode="inline"
+                defaultSelectedKeys={['4']}
+                items={SIDER_MENU.map(
+                (item, index) => ({
+                    key: String(index + 1),
+                    icon: React.createElement( item.icon ),
+                    label: item.label,
+                }),
+                )}
+            />
+            <Button icon={!mobileView && <ExitBtn />} title={'Выход'} className={s.btn_exit}>
+                {!collapsed && 'Выход'}
+            </Button>
+        </Sider>
     );
 };

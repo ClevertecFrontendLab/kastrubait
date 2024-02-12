@@ -1,8 +1,7 @@
-import { Image } from 'antd';
-import LogoFull from '@public/assets/icons/logo-full.svg'
+import LogoFull from '@public/assets/icons/logo-full.svg';
 import LogoShort from '@public/assets/icons/logo-short.svg';
 
-import './logo.module.scss';
+import s from './logo.module.scss';
 
 interface IPropsLogo {
     mobileView: boolean;
@@ -15,6 +14,11 @@ export const Logo = ({ collapsed, mobileView }: IPropsLogo) => {
     if (collapsed && !mobileView) {
         src = LogoShort;
     }
-
-    return <Image src={src} preview={false} alt='logo' />;
+    return (
+        <div className={s.Logo} >
+            <img src={src}/>
+        </div>
+    )
 };
+
+

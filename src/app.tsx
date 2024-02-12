@@ -14,11 +14,10 @@ export const App = () => {
     const mobileView = useScreenWidth();
 
     return (
-        <Layout className={s.container}>
-            {/* <SideBar mobileView={mobileView} collapsed={collapsed} setCollapsed={setCollapsed} /> */}
-            <SideBar />
-            <Layout className={s.page}>
-                <MainHeader  />
+        <Layout className={s.app_container}>
+            <SideBar mobileView={mobileView} collapsed={collapsed} setCollapsed={setCollapsed} />
+            <Layout className={s.app_content}>
+                <MainHeader />
                 {/* <MainHeader mobileView={mobileView} /> */}
                 <AppRouter />
             </Layout>
