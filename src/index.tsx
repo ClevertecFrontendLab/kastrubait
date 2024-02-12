@@ -1,10 +1,10 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 import { store } from '@redux/configure-store';
-import { MainPage } from './pages';
+import { App } from './app';
 
 import 'normalize.css';
 import './index.scss';
@@ -16,9 +16,7 @@ root.render(
     <React.StrictMode>
         <Provider store={store}>
             <HashRouter>
-                <Routes>
-                    <Route path='/' element={<MainPage />} />
-                </Routes>
+                <App />
             </HashRouter>
         </Provider>
     </React.StrictMode>,
