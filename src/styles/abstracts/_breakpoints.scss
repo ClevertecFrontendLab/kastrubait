@@ -1,0 +1,16 @@
+$sm_max: 576px;
+$md_max: 768px;
+$lg: 1440px;
+
+@mixin md_max {
+    @media only screen and (max-width: $md_max) {
+      @content;
+    }
+  }
+
+
+  @mixin md_max {
+    @media only screen and (max-width: $sm_max) {
+      @content;
+    }
+  }
