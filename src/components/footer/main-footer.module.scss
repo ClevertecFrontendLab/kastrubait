@@ -1,0 +1,101 @@
+@use '@styles/abstracts/variables' as *;
+@use '@styles/abstracts/colors' as *;
+
+.main_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    height: calc(283px + 42px);
+
+    & .footer_review {
+        margin-bottom: 42px;
+        margin-left: 24px;
+        border-radius: 2px;
+        height: 40px;
+        width: 171px;
+        text-align: center;
+        font-family: $font-family;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 130%;
+        color: $primary-light-6;
+    }
+
+    & .footer_card {
+        margin-bottom: 42px;
+        margin-right: 24px;
+        border-radius: 2px;
+        width: 240px;
+        height: 127px;
+        box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.02);
+        background: var($character-light-primary-inverse);
+    }
+
+    & .card-title {
+        margin-top: 12px ;
+        margin-bottom: 8px;
+        font-family: $font-family;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 130%;
+        color: $primary-light-6;
+
+    }
+
+    & .card-text {
+        margin-bottom: 12px;
+        font-family: $font-family;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 130%;
+        color: $character-light-secondary-45;
+    }
+
+    .card-fone {
+        margin-top: 12px;
+        padding-top: 10px;
+        margin-bottom: 12px;
+        display: flex;
+        border-top: 0.1px solid rgb(244, 238, 238);
+
+        button {
+            font-family: $font-family;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 130%;
+            color: $character-light-title-85;
+        }
+    }
+
+    .ant-card-body {
+        padding: 0;
+    }
+}
+
+@media (max-width: 991px) {
+    .footer {
+        height: calc(364px + 42px);
+    }
+}
+
+@media (max-width: 767px) {
+    .footer {
+        flex-direction: column-reverse;
+        height: calc(212px + 42px);
+
+        & .footer_btn {
+            margin: 24px 16px 42px;
+            height: 40px;
+            width: calc(100% - 32px);
+        }
+
+        & .footer_card {
+            margin: 16px;
+            width: calc(100% - 32px);
+        }
+
+        .card-fone {
+            display: block;
+        }
+    }
+}
