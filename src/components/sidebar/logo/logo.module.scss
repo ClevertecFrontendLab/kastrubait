@@ -1,24 +1,25 @@
+@use '@styles/abstracts/breakpoints' as *;
 
-.Logo {
+.logo {
     display: flex;
     justify-content: center;
     margin-top: 30px;
     margin-bottom: 50px;
     }
 
-    .Logo img {
+    .logo img {
        max-width: 133px;
        height: 100%;
        object-fit: cover;
     }
 
- @media(max-width:360px) {
-    .Logo {
+    @include md_max {
+    .logo {
        margin-bottom: 32px;
        margin-top: 17px;
 
     }
-    .Logo img {
+    .logo img {
        max-width: 72px;
 
     }

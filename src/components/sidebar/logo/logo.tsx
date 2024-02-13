@@ -15,7 +15,7 @@ export const Logo = ({ collapsed, mobileView }: IPropsLogo) => {
         src = LogoShort;
     }
     return (
-        <div className={s.Logo} >
+        <div className={s.logo} >
             <img src={src}/>
         </div>
     )
