@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 import useScreenWidth from '@hooks/useScreenWidth';
 import { AppRouter } from './router/app-router';
 import { SideBar } from '@components/sidebar/sidebar';
-import { MainHeader } from '@components/main-header/main-header';
+import { MainHeader } from '@components/header/main-header';
 
 import 'normalize.css';
 import 'antd/dist/antd.css';

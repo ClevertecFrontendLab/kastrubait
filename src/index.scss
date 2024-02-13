@@ -1,0 +1,22 @@
+@use '@styles/abstracts/colors' as *;
+@use '@styles/abstracts/variables' as *;
+
+.ant-layout {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    & *,
+    & .ant-typography {
+        color: $character-light-title-85;
+        font-family: $font-family;
+        line-height: $font-line-height; //1.3
+    }
+}
+
+#root {
+    display: flex;
+    // align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #725555;
+}

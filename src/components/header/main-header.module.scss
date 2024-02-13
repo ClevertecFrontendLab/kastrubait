@@ -1,0 +1,69 @@
+@use '@styles/abstracts/variables' as *;
+@use '@styles/abstracts/colors' as *;
+
+.main_header {
+    height: auto;
+    padding: $padding-m $padding-l;
+    background-color: $primary-light-1;
+    z-index: 1;
+
+    & .header_layout {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        line-height: 1;
+    }
+
+    & .btn_setup {
+        @media (max-width: 768px) {
+            border: 1px solid $character-light-border;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            box-shadow: $shadow-b;
+            background: $character-light-primary-inverse;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0px;
+        }
+
+        & span {
+            @media (max-width: 1200px) {
+                margin: 0;
+            }
+            @media (max-width: 768px) {
+                font-size: 0;
+            }
+        }
+        & .anticon {
+            @media (max-width: 1200px) {
+                display: none;
+            }
+            @media (max-width: 768px) {
+                display: block;
+                font-size: 14px;
+            }
+        }
+    }
+}
+.main_nav {
+    margin-bottom: 8px;
+}
+.header_text.ant-typography {
+    margin: 6px 0 0;
+    font-weight: 700;
+    max-width: 1055px;
+    min-height: 103px;
+
+    @media (max-width: 1200px) {
+        font-size: 24px;
+        font-weight: 500;
+        min-height: 68px;
+    }
+    @media (max-width: 768px) {
+        margin-top: 0px;
+        font-size: 20px;
+    }
+}
