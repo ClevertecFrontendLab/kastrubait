@@ -20,3 +20,23 @@
     min-height: 100vh;
     background-color: #725555;
 }
+
+body {
+    font-family: $second-family ;
+    max-width: $screen-xxl;
+    margin: 0 auto;
+}
+
+h1 {
+    margin: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+ul {
+    margin-left: 0;
+    padding-left: 0;
+}
+
