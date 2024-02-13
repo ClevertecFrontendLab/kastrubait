@@ -18,14 +18,22 @@
     .ant-breadcrumb {
         line-height: $font-line-height;
     }
+    .ant-layout-content {
+        flex: auto;
+        min-height: 0;
+        background: #363950 url('@public/assets/images/bg-light.png') no-repeat center/cover;
+    }
 }
 
-.app_container,
-.app_content {
+.app_container{
     display: flex;
-    align-items: top;
+    align-items: start;
     flex-wrap: wrap;
     gap: 4px;
 
     max-width: $screen-xxl;
+}
+
+.app_content {
+    background: #363950 url('@public/assets/images/bg-light.png') no-repeat center/cover;
 }

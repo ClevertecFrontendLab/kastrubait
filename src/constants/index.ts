@@ -1,15 +1,4 @@
 import { IdcardOutlined, TrophyFilled, HeartFilled, CalendarOutlined } from '@ant-design/icons';
-
-export type IconLinkType = {
-    buttonText: string;
-    icon: React.ReactNode;
-};
-
-export type cardInfoListType = {
-    title: string;
-    link: IconLinkType;
-};
-
 export const SIDER_MENU: { key: string, icon: React.ComponentType, label: string }[] =
                                                             [ { key: '1', icon: CalendarOutlined, label: "Календарь" },
                                                               { key: '2', icon: HeartFilled, label: "Тренировки" },

@@ -1,0 +1,124 @@
+@use '@styles/abstracts/variables' as *;
+@use '@styles/abstracts/colors' as *;
+@use '@styles/abstracts/breakpoints' as *;
+
+:global {
+  div.ant-card.main-text_card {
+    background: none;
+    padding: 0 $padding-l;
+
+    .ant-card-body {
+      max-width: 752px;
+      background: $character-light-primary-inverse;
+      box-shadow: $shadow-b;
+
+      p {
+        font-family: $font-family;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 130%;
+        color: $primary-light-9;
+        letter-spacing: 0.42px;
+        text-align: start;
+        margin: 0;
+      }
+    }
+  }
+
+    div.ant-card.main-text_promo {
+      background: none;
+      padding: 0 $padding-l;
+
+      min-height: 126px;
+      margin-top: $margin-l;
+      margin-bottom: $margin-m;
+      .ant-card-body {
+        max-width: 752px;
+        background: $character-light-primary-inverse;
+        box-shadow: $shadow-b;
+
+        p {
+          font-family: $font-family;
+          font-size: 20px;
+          font-weight: 500;
+          line-height: 130%;
+          color: $character-light-title-85;
+          text-align: start;
+          margin: 0;
+          letter-spacing: 0.6px;
+        }
+      }
+    }
+  div.cards-block {
+
+    div.ant-row {
+      padding: 0 0 0 $padding-l;
+      max-width: 752px;
+      //width: 100%;
+      display: flex;
+      justify-content: space-between;
+      //gap: 16px;
+
+      .cards-btn {
+        font-family: $font-family;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 130%;
+        color: $character-light-title-85;
+        width: 240px;
+
+
+        button.ant-btn.ant-btn-text {
+          font-family: $font-family;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 130%;
+          color: $primary-light-6;
+        }
+
+        .ant-card-head {
+          height: 45px;
+
+          .ant-card-head-title {
+            //white-space: pre-line;
+          }
+        }
+
+        .ant-card-body {
+          height: 56px;
+          padding: 12px;
+        }
+      }
+    }
+  }
+}
+
+.main-content {
+    max-width: 752px;
+    margin: 24px;
+}
+
+@media (max-width: 991px) {
+    .cards-block .cards-btn {
+        .ant-card-head {
+            height: 66px;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .main-content{
+        margin: 16px;
+    }
+    .cards-block {
+        flex-direction: column;
+        .cards-btn {
+            width: 100%;
+
+            .ant-card-head {
+                height: 45px;
+            }
+        }
+    }
+}
+

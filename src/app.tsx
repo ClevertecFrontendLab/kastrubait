@@ -7,19 +7,21 @@ import { MainHeader } from '@components/header/main-header';
 
 import 'normalize.css';
 import 'antd/dist/antd.css';
-import s from './app.module.scss';
+import './app.module.scss';
 
 export const App = () => {
     const [collapsed, setCollapsed] = useState(false);
     const mobileView = useScreenWidth();
 
     return (
-        <Layout className={s.app_container}>
+        <Layout className='app_container'>
             <SideBar mobileView={mobileView} collapsed={collapsed} setCollapsed={setCollapsed} />
-            <Layout className={s.app_content}>
+            <Layout >
                 <MainHeader />
-                {/* <MainHeader mobileView={mobileView} /> */}
-                <AppRouter />
+                <div className='app_content'>
+                    <AppRouter />
+                    {/*<MainFooter />*/}
+                </div>
             </Layout>
         </Layout>
     );
