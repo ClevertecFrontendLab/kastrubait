@@ -82,11 +82,19 @@
 
 .sider_container {
     position: relative;
+    min-height: 100vh;
+    offset: initial;
+    @media (max-width: 768px) {
+        position: fixed;
+        z-index: 2;
+        height: 100vh;
+    }
 }
 
 .sider_content {
     max-width: 208px;
     height: 100%;
+
 }
 
 .sider_menu {

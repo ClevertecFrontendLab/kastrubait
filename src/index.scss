@@ -15,10 +15,8 @@
 
 #root {
     display: flex;
-    // align-items: center;
     justify-content: center;
-    height: 100vh;
-    // background-color: #725555;
+    min-height: 100vh;
 }
 
 body {
