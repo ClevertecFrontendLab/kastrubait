@@ -1,14 +1,12 @@
 import { Layout, Breadcrumb, Space, Button, Typography } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 
-// type IMainHeader = {
-//     mobileView: boolean;
-// };
+import './main-header.module.scss';
 
 const { Header } = Layout;
 const { Title } = Typography;
 
-export const MainHeader = () => {
+export const MainHeader: React.FC = () => {
     return (
         <Header className='main_header'>
             <Breadcrumb className='main_nav'>

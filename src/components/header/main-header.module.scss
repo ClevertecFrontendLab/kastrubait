@@ -1,21 +1,27 @@
 @use '@styles/abstracts/variables' as *;
 @use '@styles/abstracts/colors' as *;
+@use '@styles/abstracts/breakpoints' as *;
 
-.main_header {
-    height: auto;
-    padding: $padding-m $padding-l;
-    background-color: $primary-light-1;
-    z-index: 1;
+:global {
+    h1.ant-typography {
+        margin: 6px 0 0;
+        font-weight: 700;
+        max-width: 1055px;
+        min-height: 103px;
 
-    & .header_layout {
-        display: flex;
-        justify-content: space-between;
-        align-items: start;
-        line-height: 1;
+        @media (max-width: 900px) {
+            font-size: 24px;
+            font-weight: 500;
+            min-height: 68px;
+        }
+        @include sm_max {
+            margin-top: 0px;
+            font-size: 20px;
+        }
     }
 
-    & .btn_setup {
-        @media (max-width: 768px) {
+    button.ant-btn.btn_setup {
+        @include md_max {
             border: 1px solid $character-light-border;
             border-radius: 50%;
             width: 32px;
@@ -26,44 +32,47 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 0px;
+            margin-top: 0;
         }
 
         & span {
-            @media (max-width: 1200px) {
+            @media (max-width: 900px) {
                 margin: 0;
             }
-            @media (max-width: 768px) {
+            @include md_max {
                 font-size: 0;
             }
         }
-        & .anticon {
-            @media (max-width: 1200px) {
+        & span.anticon {
+            @media (max-width: 900px) {
                 display: none;
             }
-            @media (max-width: 768px) {
+            @include md_max {
                 display: block;
                 font-size: 14px;
             }
         }
     }
-}
-.main_nav {
-    margin-bottom: 8px;
-}
-.header_text.ant-typography {
-    margin: 6px 0 0;
-    font-weight: 700;
-    max-width: 1055px;
-    min-height: 103px;
 
-    @media (max-width: 1200px) {
-        font-size: 24px;
-        font-weight: 500;
-        min-height: 68px;
-    }
-    @media (max-width: 768px) {
-        margin-top: 0px;
-        font-size: 20px;
+
+    header.main_header {
+        height: auto;
+        padding: $padding-m $padding-l;
+        background-color: $primary-light-1;
+        z-index: 1;
+
+        & .header_layout {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            line-height: 1;
+        }
+
+        .main_nav {
+            margin-bottom: 8px;
+        }
     }
 }
+
+
+
