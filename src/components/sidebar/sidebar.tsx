@@ -60,13 +60,13 @@ export const SideBar = ({ mobileView, collapsed, setCollapsed }: ISideBar) => {
                 </div>
             </Sider>
             <Button
-                data-test-id={ mobileView ? 'sider_switch_mobile' : 'sider_switch' }
+                data-test-id={ mobileView ? 'sider-switch-mobile' : 'sider-switch' }
                 style={{padding: 0, border: 0}}
                 type="default"
                 onClick={toggleCollapsed}
-                className='btn_switch'
+                className={s.btn_switch}
                 >
-                    <div className="sider_switch">
+                    <div className={s.sider_switch}>
                         {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                     </div>
             </Button>
