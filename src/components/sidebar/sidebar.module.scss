@@ -56,14 +56,6 @@
                 fill: $primary-light-9;
             }
         }
-        & svg {
-            width: 15px;
-            height: auto;
-
-            & path {
-                fill: $primary-light-9;
-            }
-        }
 
         &.ant-layout-sider-collapsed {
             & li.ant-menu-item {
