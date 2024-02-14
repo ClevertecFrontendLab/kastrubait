@@ -1,0 +1,38 @@
+@use '@styles/abstracts/variables' as *;
+@use './styles/abstracts/colors' as *;
+
+:global {
+    .ant-layout-header {
+        padding: $padding-m $padding-l;
+        height: inherit;
+        line-height: $font-line-height;
+        background: $primary-light-1;
+
+        .ant-typography + h1.ant-typography {
+            margin-top: 0;
+        }
+    }
+    .ant-space-align-center {
+        align-items: start;
+    }
+    .ant-breadcrumb {
+        line-height: $font-line-height;
+    }
+    .ant-layout-content {
+        flex: auto;
+        min-height: 0;
+    }
+}
+
+.app_container{
+    display: flex;
+    align-items: start;
+    max-width: $screen-xxl;
+}
+
+.app_content {
+    min-height: 100vh;
+    background: #363950 url('@public/assets/images/bg-mp-light.jpg') no-repeat center/cover;
+}
+
+

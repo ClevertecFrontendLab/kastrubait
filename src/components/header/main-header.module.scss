@@ -1,0 +1,79 @@
+@use '@styles/abstracts/variables' as *;
+@use '@styles/abstracts/colors' as *;
+@use '@styles/abstracts/breakpoints' as *;
+
+:global {
+    h1.ant-typography {
+        margin: 6px 0 0;
+        font-weight: 700;
+        max-width: 1055px;
+        min-height: 103px;
+
+        @media (max-width: 900px) {
+            font-size: 24px;
+            font-weight: 500;
+            min-height: 68px;
+        }
+        @include sm_max {
+            margin-top: 0px;
+            font-size: 20px;
+        }
+    }
+
+    button.ant-btn.btn_setup {
+        @include md_max {
+            border: 1px solid $character-light-border;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            box-shadow: $shadow-b;
+            background: $character-light-primary-inverse;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0;
+        }
+
+        & span {
+            @media (max-width: 900px) {
+                margin: 0;
+            }
+            @include md_max {
+                font-size: 0;
+            }
+        }
+        & span.anticon {
+            @media (max-width: 900px) {
+                display: none;
+            }
+            @include md_max {
+                display: block;
+                font-size: 16px;
+                padding-top: 2px;
+            }
+        }
+    }
+
+
+    header.main_header {
+        height: auto;
+        padding: $padding-m $padding-l;
+        background-color: $primary-light-1;
+        z-index: 1;
+
+        & .header_layout {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            line-height: 1;
+        }
+
+        .main_nav {
+            margin-bottom: 8px;
+        }
+    }
+}
+
+
+
