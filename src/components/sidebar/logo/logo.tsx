@@ -1,5 +1,6 @@
-import LogoFull from '@public/assets/icons/logo-full.svg';
-import LogoShort from '@public/assets/icons/logo-short.svg';
+import LogoFull from '../../../../public/assets/icons/logo-full.svg';
+import LogoShort from '../../../../public/assets/icons/logo-short.svg';
+
 
 import s from './logo.module.scss';
 

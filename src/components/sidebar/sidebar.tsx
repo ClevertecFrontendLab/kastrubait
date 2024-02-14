@@ -53,10 +53,11 @@ export const SideBar = ({ mobileView, collapsed, setCollapsed }: ISideBar) => {
                             )}
                         />
                     </Space>
-                    <Space size={100} direction='vertical' align='center' ></Space>
+                    <Space size={100} direction='vertical' align='center' >
                     <Button icon={!mobileView && <ExitBtn />} title={'Выход'} className={s.btn_exit}>
                         {!collapsed && 'Выход'}
                     </Button>
+                    </Space>
                 </div>
             </Sider>
             <Button
