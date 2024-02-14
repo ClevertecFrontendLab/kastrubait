@@ -4,24 +4,23 @@ import useScreenWidth from '@hooks/useScreenWidth';
 import { AppRouter } from './router/app-router';
 import { SideBar } from '@components/sidebar/sidebar';
 import { MainHeader } from '@components/header/main-header';
-import { MainFooter } from '@components/footer/main-footer';
+// import { MainFooter } from '@components/footer/main-footer';
 
 import 'normalize.css';
-// import 'antd/dist/antd.css';
-import './app.module.scss';
+import s from './app.module.scss';
 
 export const App = () => {
     const [collapsed, setCollapsed] = useState(false);
     const mobileView = useScreenWidth();
 
     return (
-        <Layout className='app_container'>
+        <Layout>
             <SideBar mobileView={mobileView} collapsed={collapsed} setCollapsed={setCollapsed} />
-            <Layout >
+            <Layout className={s.app_conteiner}>
                 <MainHeader />
-                <div className='app_content'>
+                <div className={s.app_content}>
                     <AppRouter />
-                    <MainFooter />
+                    {/* <MainFooter /> */}
                 </div>
             </Layout>
         </Layout>
