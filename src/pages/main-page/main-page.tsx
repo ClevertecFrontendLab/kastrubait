@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Row, Col } from 'antd';
+import { Button, Card } from 'antd';
 import Icon, { HeartFilled, IdcardOutlined } from '@ant-design/icons';
 // import { ActionCard } from '@components/card/action_card';
 
