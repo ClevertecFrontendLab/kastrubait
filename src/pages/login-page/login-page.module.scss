@@ -1,0 +1,96 @@
+@use '@styles/abstracts/variables' as *;
+@use '@styles/abstracts/colors' as *;
+@use '@styles/abstracts/breakpoints' as*;
+@import 'antd/dist/antd.css';
+
+.auth_tabs {
+    :global {
+        .ant-tabs-nav-list {
+            width: 100%;
+        }
+
+        .ant-tabs-tab {
+            justify-content: center;
+            width: 50%;
+            font-size: 16px;
+        }
+
+        .ant-tabs-tab + .ant-tabs-tab {
+            margin: 0;
+        }
+
+        .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+            color: $primary-light-6;
+
+        }
+
+        .ant-tabs-tab.ant-tabs-tab-active {
+            border-bottom: 2px solid $primary-light-6;
+        }
+
+        .ant-tabs-tab-btn {
+            @include md_max {
+                font-size: 14px;
+            }
+        }
+
+        .ant-tabs-ink-bar {
+            background: $character-light-primary-inverse;
+        }
+
+        #login {
+            padding: 8px 0 80px;
+
+            @include md_max {
+                padding-bottom: 60px;
+            }
+        }
+
+        #registration {
+            padding: 16px 0 0;
+
+            @include md_max {
+                padding-top: 10px;
+            }
+        }
+    }
+}
+
+.login_container{
+    // box-sizing: border-box;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: $screen-xxl;
+    height: 100vh;
+    background: #363950 url('@public/assets/images/bg-lp-light.jpg') no-repeat center/cover;
+
+    .form_container{
+        display: flex;
+        flex-flow: column;
+        width: 539px;
+        height: 686px;
+        border-radius: 2px;
+        padding: 64px 32px;
+
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+        background: $character-light-primary-inverse;
+
+        & img.logo {
+            margin: 0 84px;
+            max-width: 309px;
+        }
+
+        & img {
+            margin: 0 8px;
+        }
+
+        .tab_container {
+            margin: 0 48px;
+            padding-top: 48px;
+            max-width: 368px;
+        }
+    }
+}
