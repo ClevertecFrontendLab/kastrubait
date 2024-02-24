@@ -24,13 +24,42 @@
     }
 }
 
-.app_container {
+.main_container,
+.auth_container {
     display: flex;
-    align-items: start;
+    justify-content: center;
+    width: 100%;
     max-width: $screen-xxl;
 }
 
-.app_content {
+.main_container {
+    align-items: start;
+}
+
+.main_content {
     min-height: 100vh;
     background: #363950 url('@public/assets/images/bg-mp-light.jpg') no-repeat center/cover;
 }
+
+.auth_content {
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    min-height: 100vh;
+    background: #363950 url('@public/assets/images/bg-lp-light.jpg') no-repeat center/cover;
+}
+
+#mask {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    // width: 100%;
+    backdrop-filter: blur(12px);
+    background: rgba(121, 156, 212, 0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
