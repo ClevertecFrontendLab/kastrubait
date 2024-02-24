@@ -1,5 +1,5 @@
 @use '@styles/abstracts/variables' as *;
-@use './styles/abstracts/colors' as *;
+@use '@styles/abstracts/colors' as *;
 
 :global {
     .ant-layout-header {
@@ -24,7 +24,7 @@
     }
 }
 
-.app_container{
+.app_container {
     display: flex;
     align-items: start;
     max-width: $screen-xxl;
@@ -34,5 +34,3 @@
     min-height: 100vh;
     background: #363950 url('@public/assets/images/bg-mp-light.jpg') no-repeat center/cover;
 }
-
-
