@@ -1,5 +1,6 @@
 @use '@styles/abstracts/variables' as *;
 @use '@styles/abstracts/colors' as *;
+@use '@styles/abstracts/breakpoints' as *;
 
 
 .form_auth {
@@ -7,7 +8,21 @@
         .ant-form-item {
             margin-bottom: 32px;
         }
+        .ant-form-item-explain-error {
+            color: $character-light-error;
+            font-size: 12px;
+            margin: 0 0 14px;
+        }
 
+        .ant-input-group {
+            .ant-input {
+                height: 40px;
+            }
+        }
+
+        .ant-input-password {
+            height: 40px;
+        }
     }
 }
 
@@ -16,22 +31,33 @@
 
     :global {
         .ant-btn {
-            @media (max-width: 555px) {
+
+            @include sm_max {
                 font-size: 14px;
             }
         }
 
         .anticon {
-            @media (max-width: 555px) {
+            @include sm_max {
                 display: none;
             }
         }
 
         .ant-btn > .anticon + span {
-            @media (max-width: 555px) {
+            @include sm_max {
                 margin-left: 0;
             }
         }
+
+        .ant-btn-primary {
+            border-color: $primary-light-6;
+            background: $primary-light-6;
+
+            span {
+                color: $character-light-primary-inverse;
+            }
+        }
+
     }
 }
 
@@ -47,14 +73,26 @@
             font-size: 16px;
             color: $primary-light-6;
 
-            @media (max-width: 555px) {
+            &.ant-btn-link > span {
+                color: $primary-light-6;
+           }
+
+            @include sm_max {
                 padding-right: 7px;
                 font-size: 14px;
             }
         }
+
+
     }
 }
 
 img .form_svg_google {
     margin: 0 8px;
+}
+
+.help {
+    color: $character-light-error;
+    font-size: 12px;
+    margin: 0 0 14px;
 }

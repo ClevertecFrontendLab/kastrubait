@@ -30,6 +30,11 @@ export interface IUpdateUserSlice {
     data: IAuthUser;
 }
 
+export interface IAuthUserSlice
+    extends IUpdateUserSlice {
+        rememberMe: boolean;
+}
+
 export interface ResultsInfo {
     statusCode: number | string;
     status: ResultStatusType;

@@ -1,51 +1,82 @@
 import React from 'react';
-// import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Space, Button, Checkbox, Form, Input } from 'antd';
 import Google from '@public/assets/icons/google.svg';
+import {useAppDispatch } from '@redux/redux';
+import { authUserThunk } from '@redux/reducers/header-slice';
 
 import 'antd/dist/antd.css';
-import s from './form.module.scss';
+import style from './form.module.scss';
+import { IAuthUser } from 'src/interfaces/auth-user';
 
 
 export const AuthForm: React.FC = () => {
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+    const dispatch = useAppDispatch();
+    const [form] = Form.useForm();
+
+    const onFinish = (values: any) => {
+    // console.log('Received values of form: ', values);
+    const { email, password, rememberMe } = values;
+    const data: IAuthUser = {
+        email: email,
+        password: password,
+    }
+
+    dispatch(authUserThunk({ data, rememberMe}))
   };
-  const [form] = Form.useForm();
+
+  const handleButtonClick = () => {
+    form.validateFields().then().catch(err => console.log(err))
+};
 
   return (
     <Form
       name='normal_login'
       form={form}
-      onFinish={onFinish}
       autoComplete='off'
       scrollToFirstError
-      className={s['form_auth']}
+      className={style['form_auth']}
       initialValues={{ rememberMe: true }}
+      onFinish={onFinish}
     //   onFinish={onFinish}
     >
       <Form.Item
         name='email'
-        rules={[{ required: true, message: 'Please input your Username!' }]}
+        rules={[
+            {
+                required: true,
+                type: 'email',
+                message: 'Не верный формат email',
+            },
+        ]}
       >
         <Input
             data-test-id='login-email'
             addonBefore={'e-mail:'}
-            // prefix={<UserOutlined className='site-form-item-icon' />}
-             />
+        />
       </Form.Item>
       <Form.Item
         name='password'
-        rules={[{ required: true, message: 'Please input your Password!' }]}
+        help={
+            <span className={style['help']}>
+                Пароль не менее 8 символов, с заглавной буквой и цифрой
+            </span>
+        }
+        rules={[
+            {
+                required: true,
+                min: 8,
+                pattern: new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$'),
+                message: 'Пароль не менее 8 символов, с заглавной буквой и цифрой'
+            },
+        ]}
       >
-        <Input
+        <Input.Password
             data-test-id='login-password'
-            // prefix={<LockOutlined className='site-form-item-icon' />}
-            type='password'
+            autoComplete='new-password'
             placeholder='Пароль'
         />
       </Form.Item>
-      <div className={s['form_check_area']}>
+      <div className={style['form_check_area']}>
         <Form.Item name='rememberMe' valuePropName='checked' noStyle>
             <Checkbox
                 data-test-id='login-remember'
@@ -60,24 +91,24 @@ export const AuthForm: React.FC = () => {
             type={'link'}
             // onClick={verifyCheckEmail}
             // disabled
-            className={s['body_regular_16']}>
+        >
             Забыли пароль?
         </Button>
       </div>
 
-      <Space direction='vertical' size={16} className={s['form_buttons']}>
+      <Space direction='vertical' size={16} className={style['form_buttons']}>
         <Button
             data-test-id='login-submit-button'
             type={'primary'}
             htmlType={'submit'}
             size='large' block
-            // onClick={handleButtonClick}
+            onClick={handleButtonClick}
             > Войти
         </Button>
         <Button
             type={'default'}
             size='large' block
-            >   <img className={s['form_svg_google']}
+            >   <img className={style['form_svg_google']}
                      src={Google}
                      height={'10px'}
                      alt={'google'}/>

@@ -1,11 +1,10 @@
-import axios, {
-    AxiosRequestHeaders,
-    InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestHeaders, InternalAxiosRequestConfig } from 'axios';
 import {
     IUpdateUserSlice,
     ICheckEmailSlice,
     IConfirmEmailSlice,
-    IChangePassSlice } from '../interfaces/auth-user.ts'
+    IChangePassSlice,
+} from '../interfaces/auth-user.ts';
 
 const instance = axios.create({
     withCredentials: false,
@@ -22,54 +21,53 @@ instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
     return config;
 });
-export const ApiService = {
 
+export const ApiService = {
     //Reg & Auth
     async authGoogle() {
+        return instance.get(`/auth/google`, {}).then((response) => {
+            return response.data;
+        });
+    },
+
+    async authorization({ data }: IUpdateUserSlice) {
         return instance
-            .get(`/auth/google`, {})
+            .post(`/auth/login`, { email: data.email, password: data.password })
             .then((response) => {
                 return response.data;
             });
     },
 
-    async authorization({data}: IUpdateUserSlice) {
+    async registration({ data }: IUpdateUserSlice) {
         return instance
-            .post(`/auth/login`, {email: data.email, password: data.password})
+            .post(`/auth/registration`, { email: data.email, password: data.password })
             .then((response) => {
                 return response.data;
             });
     },
 
-    async registration({data}: IUpdateUserSlice) {
+    async checkEmail({ data }: ICheckEmailSlice) {
+        return instance.post(`/auth/check-email`, { email: data.email }).then((response) => {
+            return response.data;
+        });
+    },
+
+    async confirmEmail({ data }: IConfirmEmailSlice) {
         return instance
-            .post(`/auth/registration`, {email: data.email, password: data.password})
+            .post(`/auth/confirm-email`, { email: data.email, code: data.code })
             .then((response) => {
                 return response.data;
             });
     },
 
-    async checkEmail({data}: ICheckEmailSlice) {
+    async changePassword({ data }: IChangePassSlice) {
         return instance
-            .post(`/auth/check-email`, {email: data.email})
+            .post(`/auth/change-password`, {
+                password: data.password,
+                confirmPassword: data.confirmPassword,
+            })
             .then((response) => {
                 return response.data;
             });
     },
-
-    async confirmEmail({data}: IConfirmEmailSlice) {
-        return instance
-            .post(`/auth/confirm-email`, {email: data.email, code: data.code})
-            .then((response) => {
-                return response.data;
-            });
-    },
-
-    async changePassword({data}: IChangePassSlice) {
-        return instance
-            .post(`/auth/change-password`, {password: data.password, confirmPassword: data.confirmPassword})
-            .then((response) => {
-                return response.data;
-            });
-    },
-}
+};

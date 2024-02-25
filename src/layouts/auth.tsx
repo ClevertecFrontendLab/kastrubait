@@ -7,14 +7,14 @@ import { Layout } from 'antd';
 export const AuthLayout = () => {
     return (
         <>
-        <Layout className={style['auth_conteiner']}>
+            <Layout className={style['auth_conteiner']}>
 
-            <div className={style['auth_content']}>
-                <div id={style['mask']}>
-                  <Outlet />
+                <div className={style['auth_content']}>
+                    {/* <div id={style['mask']}> */}
+                    <Outlet />
+                    {/* </div> */}
                 </div>
-            </div>
-        </Layout>
+            </Layout>
         </>
     );
 };

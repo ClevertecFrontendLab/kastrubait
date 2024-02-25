@@ -2,7 +2,7 @@
 @use '@styles/abstracts/colors' as *;
 @use '@styles/abstracts/breakpoints' as*;
 
-@import 'antd/dist/antd.css';
+// @import 'antd/dist/antd.css';
 
 .auth_tabs {
     :global {
@@ -20,13 +20,12 @@
             margin: 0;
         }
 
-        .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-            color: $primary-light-6;
-
-        }
-
         .ant-tabs-tab.ant-tabs-tab-active {
             border-bottom: 2px solid $primary-light-6;
+
+            .ant-tabs-tab-btn {
+                color: $primary-light-6;
+            }
         }
 
         .ant-tabs-tab-btn {

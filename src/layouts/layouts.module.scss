@@ -42,9 +42,9 @@
 }
 
 .auth_content {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
     background: #363950 url('@public/assets/images/bg-lp-light.jpg') no-repeat center/cover;
 }
