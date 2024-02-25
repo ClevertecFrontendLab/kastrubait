@@ -4,9 +4,11 @@ import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { Logo } from '@components/sidebar/logo/logo';
 import { ExitBtn } from './ExitBtn/exitBtn';
 import { SIDER_MENU } from '@constants/index';
+import { useAppDispatch } from '@redux/redux';
+import { logOutUser } from '@redux/reducers/header-slice';
 
 import 'antd/dist/antd.css';
-import s from './sidebar.module.scss';
+import style from './sidebar.module.scss';
 
 type ISideBar = {
     mobileView: boolean;
@@ -18,26 +20,31 @@ const { Sider } = Layout;
 const { useBreakpoint } = Grid;
 
 export const SideBar = ({ mobileView, collapsed, setCollapsed }: ISideBar) => {
-
+    const dispatch = useAppDispatch()
     const isBreakpointMore768 = useBreakpoint().md;
+
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
-      };
+    };
+
+    const logOutButtonHandler = () => {
+        dispatch(logOutUser());
+    }
 
     return (
-        <div className={s.sider_container}>
+        <div className={style['sider_container']}>
             <Sider
                 trigger={null}
                 collapsible
                 theme={'light'}
                 collapsed={collapsed}
-                className={s.sider_content}
+                className={style['sider_content']}
                 width={isBreakpointMore768 ? 208 : 106}
                 collapsedWidth={isBreakpointMore768 ? 64 : 0}
             >
 
                 <Logo collapsed={collapsed} mobileView={ mobileView} />
-                <div className='sider_menu'>
+                <div className={style['sider_menu']}>
                     <Space size={100} direction='vertical' align='center' >
                         <Menu
                             theme="light"
@@ -54,7 +61,12 @@ export const SideBar = ({ mobileView, collapsed, setCollapsed }: ISideBar) => {
                         />
                     </Space>
                     <Space size={100} direction='vertical' align='center' ></Space>
-                    <Button icon={!mobileView && <ExitBtn />} title={'Выход'} className={s.btn_exit}>
+                    <Button
+                        icon={!mobileView && <ExitBtn />}
+                        title={'Выход'}
+                        onClick={logOutButtonHandler}
+                        className={style['btn_exit']}
+                    >
                         {!collapsed && 'Выход'}
                     </Button>
                 </div>
@@ -64,9 +76,9 @@ export const SideBar = ({ mobileView, collapsed, setCollapsed }: ISideBar) => {
                 style={{padding: 0, border: 0}}
                 type="default"
                 onClick={toggleCollapsed}
-                className={s.btn_switch}
+                className={style['btn_switch']}
                 >
-                    <div className={s.sider_switch}>
+                    <div className={style['sider_switch']}>
                         {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                     </div>
             </Button>
