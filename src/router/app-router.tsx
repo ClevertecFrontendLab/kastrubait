@@ -1,16 +1,18 @@
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, lazy } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { push } from 'redux-first-history';
 import { AUTH_STATUS, LOADING_TRUE, PATH, unAuthorized } from '@constants/index';
 import { setErrors } from '@redux/reducers/header-slice';
 import { setIsAuthUser } from '@redux/reducers/header-slice';
-import { useAppDispatch, useAppSelector } from '@redux/redux';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { MainPage } from '@pages/main-page';
 import { LoginPage } from '@pages/login-page';
 import { Loader }from '@components/spinner';
 import { ResultBlock } from '@components/result';
-import { MainContent } from '@pages/main-page/content/main-content';
-import { LoginContent } from '@pages/login-page/content/login-content';
+import { MainLayout } from '../layouts/main';
+import { AuthLayout } from '../layouts/auth';
+
+// const MainPage = lazy(() => import('@pages/main-page/main-page') );
 
 export const AppRouter = () => {
     const navigate = useNavigate();
@@ -19,22 +21,21 @@ export const AppRouter = () => {
     const isAuthUser = useAppSelector((state) => state.header.isAuthUser);
     const error = useAppSelector((state) => state.header.error);
     const status = useAppSelector((state) => state.header.status);
-    // const status = 'loading';
 
-    const isError = error === unAuthorized;
+    const isError = error?.statusCode === unAuthorized;
 
-    console.log(isAuthUser, isError);
+    console.log(status, isAuthUser, isError);
 
     useEffect(() => {
         if (localStorage.getItem('token')) {
           dispatch(setIsAuthUser(true));
           if (isError) {
-            // navigate(`${PATH.AUTH}`);
             dispatch(push(`${PATH.AUTH}`));
+            navigate(`${PATH.AUTH}`);
             setTimeout(() => {
               dispatch(setIsAuthUser(false));
             }, 10);
-            dispatch(setErrors(undefined));
+            dispatch(setErrors(null));
             localStorage.clear();
           }
         }
@@ -44,7 +45,7 @@ export const AppRouter = () => {
         console.log('Current location is ', location);
       }, [location]);
 
-    //   if (status === LOADING_TRUE) {
+    // if (status === LOADING_TRUE) {
     //     return <Loader />;
     //   }
 
@@ -57,16 +58,16 @@ export const AppRouter = () => {
                     element={<Navigate to={PATH.MAIN} />}
                 />
                 <Route
-                    path = {PATH.MAIN}
+                    // path = {PATH.MAIN}
                     element = {
                         <Suspense fallback={<Loader />}>
-                            <MainPage />
+                            <MainLayout />
                         </Suspense>
                     }
                 >
                     <Route
-                        index
-                        element = {<MainContent />}
+                        path = {PATH.MAIN}
+                        element = {<MainPage />}
                     />
                 </Route>
                 <Route
@@ -78,68 +79,54 @@ export const AppRouter = () => {
     ) : (
         <>
             <Routes>
-                <Route
-                    path = '/'
-                    element={<Navigate to={PATH.AUTH} />}
-                />
-                <Route
-                    path = {PATH.AUTH}
-                    element = {<LoginPage />}
-                >
+                <Route path = '/' element={<Navigate to={PATH.AUTH} />} />
+                <Route element = {<AuthLayout />} >
                     <Route
-                        index
-                        element = {<LoginContent type={'signin'} />}
+                        path = {PATH.AUTH}
+                        element = {<LoginPage type={'signin'} />}
                     />
                     <Route
-                        path={PATH.SIGN_UP}
-                        element = {<LoginContent type={'signup'} />}
+                        path={`${PATH.AUTH}/${PATH.SIGN_UP}`}
+                        element = {<LoginPage type={'signup'} />}
                     />
                     <Route
-                        path={PATH.CONFIRM_EMAIL}
+                        path={`${PATH.AUTH}/${PATH.CONFIRM_EMAIL}`}
                         element = {<h1>CONFIRM_EMAIL</h1>} // TODO
                     />
                     <Route
-                        path={PATH.CHANGE_PASSWORD}
+                        path={`${PATH.AUTH}/${PATH.CHANGE_PASSWORD}`}
                         element = {<h1>CHANGE_PASSWORD</h1>} // TODO
                     />
-                </Route>
-                <Route
-                    path = '*'
-                    element={<Navigate to={PATH.AUTH} />}
-                />
-                <Route
-                    path = {PATH.RESULT}
-                    element = {<LoginPage />}
-                >
                     <Route
-                        path={PATH.SUCCESS}
+                        path={`${PATH.RESULT}/${PATH.SUCCESS}`}
                         element = {<ResultBlock statusCode={AUTH_STATUS.SUCCESS}  />}
                     />
                      <Route
-                        path={PATH.SUCCESS_CHANGE_PASSWORD}
+                        path={`${PATH.RESULT}/${PATH.SUCCESS_CHANGE_PASSWORD}`}
                         element = {<ResultBlock statusCode={AUTH_STATUS.SUCCESS_CHANGE_PASSWORD}  />}
                     />
                     <Route
-                        path={PATH.ERROR}
+                        path={`${PATH.RESULT}/${PATH.ERROR}`}
                         element = {<ResultBlock statusCode={AUTH_STATUS.ERROR}  />}
                     />
                     <Route
-                        path={PATH.ERROR_LOGIN}
+                        path={`${PATH.RESULT}/${PATH.ERROR_LOGIN}`}
                         element = {<ResultBlock statusCode={AUTH_STATUS.ERROR_LOGIN}  />}
                     />
                     <Route
-                        path={PATH.ERROR_CHECK_EMAIL_NO_EXIST}
+                        path={`${PATH.RESULT}/${PATH.ERROR_CHECK_EMAIL_NO_EXIST}`}
                         element = {<ResultBlock statusCode={AUTH_STATUS.ERROR_CHECK_EMAIL_NO_EXIST}  />}
                     />
                     <Route
-                        path={PATH.ERROR_CHECK_EMAIL}
+                        path={`${PATH.RESULT}/${PATH.ERROR_CHECK_EMAIL}`}
                         element = {<ResultBlock statusCode={AUTH_STATUS.ERROR_CHECK_EMAIL}  />}
                     />
                     <Route
-                        path={PATH.ERROR_CHANGE_PASSWORD}
+                        path={`${PATH.RESULT}/${PATH.ERROR_CHANGE_PASSWORD}`}
                         element = {<ResultBlock statusCode={AUTH_STATUS.ERROR_CHANGE_PASSWORD}  />}
                     />
                 </Route>
+                <Route path = '*' element={<Navigate to={PATH.AUTH} />} />
             </Routes>
         </>
     );
