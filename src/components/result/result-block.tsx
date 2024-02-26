@@ -9,10 +9,6 @@ interface IResultBlock {
     statusCode?: number | string;
 }
 
-// interface ClassMap {
-//     [key: string]: string;
-// }
-
 export const ResultBlock = ({ statusCode } : IResultBlock) => {
 
     const dispatch = useAppDispatch();
@@ -22,18 +18,10 @@ export const ResultBlock = ({ statusCode } : IResultBlock) => {
         if (result) dispatch(push(result.redirect));
     };
 
-    // const classMap: ClassMap = {
-    //     [PATH.ERROR_CHECK_EMAIL_NO_EXIST]: style['auth_check_email'],
-    //     [PATH.ERROR_CHECK_EMAIL]: style['auth_check_email'],
-    // };
-
-    // const className = statusCode ? classMap[statusCode] : style['auth_status'];
-
     return (
         <div className={style['result_container']}>
             {result && (
                 <Result
-                    // className={className}
                     status={result.status}
                     title={result.title}
                     subTitle={result.subtitle}

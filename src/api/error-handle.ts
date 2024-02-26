@@ -10,7 +10,7 @@ const ErrorHandle = (error: IErrorPayload): void => {
 
     switch (route) {
         case 'login':
-            dispatch(push(`${PATH.RESULT}/${PATH.ERROR_LOGIN}`, {fromServer: true}))
+            dispatch(push(`${PATH.RESULT}/${PATH.ERROR_LOGIN}`, {fromServer: true}));
             break;
         case 'registration':
             if (statusCode === AUTH_STATUS.ERROR_409) {

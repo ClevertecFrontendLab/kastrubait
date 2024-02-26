@@ -7,7 +7,6 @@ import LogoFull from '@public/assets/icons/logo-full.svg';
 
 import style from './login-page.module.scss';
 
-
 interface ITypeForm {
     type: string;
 }

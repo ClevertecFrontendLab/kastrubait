@@ -1,6 +1,5 @@
 @use '@styles/abstracts/variables' as *;
 @use '@styles/abstracts/colors' as *;
-// @use '@styles/abstracts/breakpoints' as *;
 
 :global {
     .ant-result {
@@ -21,7 +20,7 @@
     .ant-btn {
         width: 100%;
         font-size: 14px;
-        
+
         &.ant-btn-primary {
             border-color: $primary-light-6;
             background: $primary-light-6;

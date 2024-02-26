@@ -11,6 +11,7 @@ import { Loader }from '@components/spinner';
 import { ResultBlock } from '@components/result';
 import { MainLayout } from '../layouts/main';
 import { AuthLayout } from '../layouts/auth';
+import { ConfirmEmail } from '@components/form/confirm-email';
 
 // const MainPage = lazy(() => import('@pages/main-page/main-page') );
 
@@ -89,7 +90,7 @@ export const AppRouter = () => {
                     />
                     <Route
                         path={`${PATH.AUTH}/${PATH.CONFIRM_EMAIL}`}
-                        element = {<h1>CONFIRM_EMAIL</h1>} // TODO
+                        element = {<ConfirmEmail />}
                     />
                     <Route
                         path={`${PATH.AUTH}/${PATH.CHANGE_PASSWORD}`}
