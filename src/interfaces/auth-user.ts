@@ -33,6 +33,7 @@ export interface IErrorPayload {
     statusCode: number;
     error: string;
     message: string;
+    route: string;
 }
 
 export interface IHeaderState {

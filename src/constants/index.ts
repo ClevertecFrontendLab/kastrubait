@@ -44,13 +44,13 @@ export const enum AUTH_STATUS {
     ERROR_409 = 409,
     ERROR = 'error',
     ERROR_LOGIN = 'error-login',
+    ERROR_USER_EXIT = 'error-user-exist',
     ERROR_404 = 404,
     ERROR_CHECK_EMAIL = 'error-check-email',
     ERROR_CHECK_EMAIL_NO_EXIST = 'error-check-email-no-exist',
     ERROR_CHANGE_PASSWORD = 'change-password',
     SUCCESS = 'success',
     SUCCESS_CHANGE_PASSWORD = 'success-change-password',
-
 }
 
 export const LOADING_TRUE = 'loading';

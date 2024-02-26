@@ -20,11 +20,9 @@ export const AppRouter = () => {
     const dispatch = useAppDispatch();
     const isAuthUser = useAppSelector((state) => state.header.isAuthUser);
     const error = useAppSelector((state) => state.header.error);
-    const status = useAppSelector((state) => state.header.status);
+    // const status = useAppSelector((state) => state.header.status);
 
     const isError = error?.statusCode === unAuthorized;
-
-    console.log(status, isAuthUser, isError);
 
     useEffect(() => {
         if (localStorage.getItem('token')) {
@@ -108,6 +106,10 @@ export const AppRouter = () => {
                     <Route
                         path={`${PATH.RESULT}/${PATH.ERROR}`}
                         element = {<ResultBlock statusCode={AUTH_STATUS.ERROR}  />}
+                    />
+                     <Route
+                        path={`${PATH.RESULT}/${PATH.ERROR_USER_EXIT}`}
+                        element = {<ResultBlock statusCode={AUTH_STATUS.ERROR_409}  />}
                     />
                     <Route
                         path={`${PATH.RESULT}/${PATH.ERROR_LOGIN}`}

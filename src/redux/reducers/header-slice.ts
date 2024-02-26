@@ -19,6 +19,7 @@ export const addUserThunk = createAsyncThunk(
                     statusCode: err?.response?.status || 500,
                     error: err?.response?.data?.error,
                     message: err?.response?.data?.message,
+                    route: 'registration',
                 };
                 ErrorHandle(errorResponse);
             }
@@ -31,10 +32,12 @@ export const addUserThunk = createAsyncThunk(
 
 export const authUserThunk = createAsyncThunk(
     'header/authorizationStatus',
-    async ({ data, rememberMe }: IUpdateUserSlice, thunkAPI) => {
+    async (params: IUpdateUserSlice, thunkAPI) => {
         try {
+            const { data } = params
             const response = await ApiService.authorization({ data });
             thunkAPI.dispatch(setResponseCode(200));
+            thunkAPI.dispatch(setUserData(params));
             return response;
         } catch (err) {
             if (err instanceof AxiosError) {
@@ -42,11 +45,11 @@ export const authUserThunk = createAsyncThunk(
                     statusCode: err?.response?.status || 500,
                     error: err?.response?.data?.error || 'Unknown Error',
                     message: err?.response?.data?.message || 'An error occurred',
+                    route: 'login',
                 };
                 ErrorHandle(errorResponse);
             }
             if (err instanceof Error) {
-                console.log('Error ', err)
                 return thunkAPI.rejectWithValue(err.message);
             }
         }
@@ -66,11 +69,11 @@ export const checkEmailThunk = createAsyncThunk(
                     statusCode: err?.response?.status || 500,
                     error: err?.response?.data?.error,
                     message: err?.response?.data?.message,
+                    route: 'checkEmail',
                 };
                 ErrorHandle(errorResponse);
             }
             if (err instanceof Error) {
-                console.log('Error ', err)
                 return thunkAPI.rejectWithValue(err.message);
             }
         }
@@ -90,11 +93,11 @@ export const confirmEmailThunk = createAsyncThunk(
                     statusCode: err?.response?.status || 500,
                     error: err?.response?.data?.error,
                     message: err?.response?.data?.message,
+                    route: 'confirmEmail',
                 };
                 ErrorHandle(errorResponse);
             }
             if (err instanceof Error) {
-                console.log('Error ', err)
                 return thunkAPI.rejectWithValue(err.message);
             }
         }
@@ -114,11 +117,11 @@ export const changePasswordThunk = createAsyncThunk(
                     statusCode: err?.response?.status || 500,
                     error: err?.response?.data?.error,
                     message: err?.response?.data?.message,
+                    route: 'changePassword',
                 };
                 ErrorHandle(errorResponse);
             }
             if (err instanceof Error) {
-                console.log('Error ', err)
                 return thunkAPI.rejectWithValue(err.message);
             }
         }
@@ -129,7 +132,7 @@ const initialState: IHeaderState = {
     isAuthUser: false,
     userLogin: '',
     password: '',
-    rememberMe: true,
+    rememberMe: false,
     responseCode: 0,
     status: null,
     error: null,
@@ -192,15 +195,14 @@ export const headerSlice = createSlice({
                 state.status = 'resolved';
                 if (state.rememberMe) {
                     localStorage.setItem('token', action.payload.accessToken);
+                    state.userLogin = localStorage.getItem('userLogin');
+                    if (action.payload.accessToken && !state.userLogin) {
+                        const claims = jose.decodeJwt(action.payload.accessToken);
+                        state.userLogin = claims.email as string;
+                        localStorage.setItem('userLogin', state.userLogin);
+                    }
                 } else {
                     sessionStorage.setItem('token', action.payload.accessToken);
-                }
-
-                state.userLogin = localStorage.getItem('userLogin');
-                if (action.payload.accessToken && !state.userLogin) {
-                    const claims = jose.decodeJwt(action.payload.accessToken);
-                    state.userLogin = claims.email as string;
-                    localStorage.setItem('userLogin', state.userLogin);
                 }
                 state.isAuthUser = true;
                 state.status = null;

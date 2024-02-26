@@ -19,7 +19,6 @@ export const AuthForm: React.FC = () => {
     const [form] = Form.useForm();
 
     const onFinish = (values: IFormValues) => {
-    // console.log('Received values of form: ', values);
     const { email, password, rememberMe } = values;
     const data: IAuthUser = {
         email: email,
