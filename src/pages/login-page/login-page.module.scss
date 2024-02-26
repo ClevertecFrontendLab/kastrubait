@@ -2,8 +2,6 @@
 @use '@styles/abstracts/colors' as *;
 @use '@styles/abstracts/breakpoints' as*;
 
-// @import 'antd/dist/antd.css';
-
 .auth_tabs {
     :global {
         .ant-tabs-nav-list {
@@ -35,7 +33,7 @@
         }
 
         .ant-tabs-ink-bar {
-            background: $character-light-primary-inverse;
+            background: $primary-light-6;
         }
 
         #login {
