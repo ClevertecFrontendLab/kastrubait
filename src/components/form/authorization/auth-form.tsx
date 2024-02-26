@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Space, Button, Checkbox, Form, Input } from 'antd';
 import Google from '@public/assets/icons/google.svg';
-import {useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import {useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { authUserThunk } from '@redux/reducers/header-slice';
+import { history } from '@redux/configure-store';
 
 import 'antd/dist/antd.css';
 import style from './form.module.scss';
@@ -16,6 +17,7 @@ interface IFormValues {
 
 export const AuthForm: React.FC = () => {
     const dispatch = useAppDispatch();
+    const prev = useAppSelector(state => state.router.previousLocations)
     const [form] = Form.useForm();
 
     const onFinish = (values: IFormValues) => {
@@ -28,9 +30,15 @@ export const AuthForm: React.FC = () => {
     dispatch(authUserThunk({ data, rememberMe}))
   };
 
-  const handleButtonClick = () => {
-    form.validateFields().then().catch(err => console.log(err))
-};
+    const handleButtonClick = () => {
+        form.validateFields().then().catch(err => console.log(err))
+    };
+
+    const location = history.location;
+
+    useEffect(() => {
+        console.log('Current location is ', location);
+    }, [location, prev]);
 
   return (
     <Form
@@ -41,7 +49,6 @@ export const AuthForm: React.FC = () => {
       className={style['form_auth']}
       initialValues={{ rememberMe: true }}
       onFinish={onFinish}
-    //   onFinish={onFinish}
     >
       <Form.Item
         name='email'
@@ -60,11 +67,6 @@ export const AuthForm: React.FC = () => {
       </Form.Item>
       <Form.Item
         name='password'
-        help={
-            <span className={style['help']}>
-                Пароль не менее 8 символов, с заглавной буквой и цифрой
-            </span>
-        }
         rules={[
             {
                 required: true,

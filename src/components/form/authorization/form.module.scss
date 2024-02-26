@@ -71,10 +71,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
+    margin-bottom: 24px;
 
     :global {
         .ant-btn {
+            width: initial;
             padding: 2px 0;
             font-size: 16px;
             color: $primary-light-6;
@@ -89,7 +90,6 @@
             }
         }
 
-
     }
 }
 
@@ -98,7 +98,7 @@ img .form_svg_google {
 }
 
 .help {
-    color: $character-light-error;
+    // color: initial;
     font-size: 12px;
     margin: 0 0 14px;
 }

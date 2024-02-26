@@ -1,6 +1,6 @@
 import {push} from 'redux-first-history';
 import { Tabs } from 'antd';
-import { AuthForm, RegisterForm } from '@components/form';
+import { AuthForm, RegisterForm } from '@components/form/authorization';
 import { PATH } from '@constants/index';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import LogoFull from '@public/assets/icons/logo-full.svg';
@@ -36,9 +36,9 @@ export const LoginPage = ({ type } : ITypeForm) => {
 
     return (
         <div className={style['form_container']}>
-            <img src={src} className={style['logo']} />
+            <img src={src} className={style['form_container_logo']} />
 
-            <div className={style['tab_container']}>
+            {/* <div className={style['tab_container']}> */}
                 <Tabs
                     type='line'
                     defaultActiveKey={type}
@@ -47,9 +47,9 @@ export const LoginPage = ({ type } : ITypeForm) => {
                     items={tab_items}
                     // tabBarStyle={}
                     onTabClick={callbackTabClicked}
-                    className={style['auth_tabs']}
+                    className={style['form_container_tabs']}
                 />
-            </div>
+            {/* </div> */}
         </div>
     );
 };
