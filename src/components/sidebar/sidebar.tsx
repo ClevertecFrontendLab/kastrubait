@@ -4,7 +4,7 @@ import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { Logo } from '@components/sidebar/logo/logo';
 import { ExitBtn } from './ExitBtn/exitBtn';
 import { SIDER_MENU } from '@constants/index';
-import { useAppDispatch } from '@redux/redux';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { logOutUser } from '@redux/reducers/header-slice';
 
 import 'antd/dist/antd.css';

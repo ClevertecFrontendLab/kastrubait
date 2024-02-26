@@ -1,19 +1,24 @@
 import React from 'react';
 import { Space, Button, Checkbox, Form, Input } from 'antd';
 import Google from '@public/assets/icons/google.svg';
-import {useAppDispatch } from '@redux/redux';
+import {useAppDispatch } from '@hooks/typed-react-redux-hooks';
 import { authUserThunk } from '@redux/reducers/header-slice';
 
 import 'antd/dist/antd.css';
 import style from './form.module.scss';
 import { IAuthUser } from 'src/interfaces/auth-user';
 
+interface IFormValues {
+    email: string;
+    password: string;
+    rememberMe: boolean;
+}
 
 export const AuthForm: React.FC = () => {
     const dispatch = useAppDispatch();
     const [form] = Form.useForm();
 
-    const onFinish = (values: any) => {
+    const onFinish = (values: IFormValues) => {
     // console.log('Received values of form: ', values);
     const { email, password, rememberMe } = values;
     const data: IAuthUser = {

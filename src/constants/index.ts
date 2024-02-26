@@ -55,7 +55,7 @@ export const enum AUTH_STATUS {
 
 export const LOADING_TRUE = 'loading';
 
-export const unAuthorized = '401';
+export const unAuthorized = 401;
 
 export const RESULT_INFO: ResultsInfo[] = [
     {

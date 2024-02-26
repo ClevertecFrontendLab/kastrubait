@@ -7,8 +7,11 @@ import {
 } from '../interfaces/auth-user.ts';
 
 const instance = axios.create({
-    withCredentials: false,
+    withCredentials: true,
     baseURL: 'https://marathon-api.clevertec.ru/',
+    headers: {
+        'Content-Type': 'application/json',
+    },
 });
 
 instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
@@ -46,26 +49,23 @@ export const ApiService = {
             });
     },
 
-    async checkEmail({ data }: ICheckEmailSlice) {
-        return instance.post(`/auth/check-email`, { email: data.email }).then((response) => {
+    async checkEmail(params: ICheckEmailSlice) {
+        return instance.post(`/auth/check-email`, params).then((response) => {
             return response.data;
         });
     },
 
-    async confirmEmail({ data }: IConfirmEmailSlice) {
+    async confirmEmail(params: IConfirmEmailSlice) {
         return instance
-            .post(`/auth/confirm-email`, { email: data.email, code: data.code })
+            .post(`/auth/confirm-email`, params)
             .then((response) => {
                 return response.data;
             });
     },
 
-    async changePassword({ data }: IChangePassSlice) {
+    async changePassword(params: IChangePassSlice) {
         return instance
-            .post(`/auth/change-password`, {
-                password: data.password,
-                confirmPassword: data.confirmPassword,
-            })
+            .post(`/auth/change-password`,  params)
             .then((response) => {
                 return response.data;
             });
