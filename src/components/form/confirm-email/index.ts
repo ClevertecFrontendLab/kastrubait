@@ -1,1 +1,1 @@
-export { ConfirmEmail } from './confirm-email.tsx';
+export { ConfirmEmail } from './confirm-email';
