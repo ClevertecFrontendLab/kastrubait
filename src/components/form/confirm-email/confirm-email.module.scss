@@ -2,37 +2,19 @@
 @use '@styles/abstracts/colors' as *;
 @use '@styles/abstracts/breakpoints' as *;
 
-:global {
-    .ant-result {
-        padding: 0;
-        max-width: 368px;
-        width: 100%;
-        margin: 0 auto;
-    }
 
-    .ant-result-title {
-        line-height: 1.4;
-    }
-
-    .ant-result-subtitle {
-        line-height: 1.2;
-    }
-
-    .ant-result-extra {
-        margin: $padding-l $padding-xl 0;
-    }
-}
-
-.confirm-block {
+.confirm_block {
     display: flex;
-    justify-content: center;
+    flex-flow: column;
     align-items: center;
-    padding: $padding-xxl $padding-xl;
-    width: 539px;
-    border-radius: 2px;
+    justify-content: start;
 
-    background: $character-light-primary-inverse;
+    width: 539px;
+    padding: $padding-xxl $padding-xl;
+
+    border-radius: 2px;
     box-shadow: $shadow-a;
+    background: $character-light-primary-inverse;
 }
 
 .confirm_notification {
@@ -58,7 +40,7 @@
     background: $character-light-background;
 }
 
-.character_rror {
+.character_error {
     width: 40px;
     height: 40px;
     border: 1px solid $character-light-error;
@@ -72,5 +54,26 @@
 @include md_max {
     .confirm_block {
         padding: $padding-xl 10px;
+    }
+}
+
+:global {
+    .ant-result {
+        padding: 0;
+        max-width: 368px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .ant-result-title {
+        line-height: 1.4;
+    }
+
+    .ant-result-subtitle {
+        line-height: 1.2;
+    }
+
+    .ant-result-extra {
+        margin: $padding-l $padding-xl 0;
     }
 }

@@ -8,7 +8,7 @@ import style from './confirm-email.module.scss';
 
 const { Text } = Typography;
 
-export const ConfirmEmail: React.FC = () => {
+export const ConfirmEmail = () => {
 
     const { userLogin } = useAppSelector(state => state.header);
 
@@ -26,7 +26,6 @@ export const ConfirmEmail: React.FC = () => {
     };
 
     return (
-        <>
         <div className={style['confirm_block']}>
             <Result
                 status={isError ? 'error' : undefined}
@@ -58,6 +57,5 @@ export const ConfirmEmail: React.FC = () => {
                 <Text type='secondary'>Не пришло письмо? Проверьте папку Спам.</Text>
             </div>
         </div>
-        </>
     );
 }
