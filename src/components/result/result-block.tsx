@@ -1,9 +1,12 @@
 import { Button, Result } from 'antd';
-import { push } from 'redux-first-history';
-import { PATH, RESULT_INFO } from '@constants/index';
+// import { push } from 'redux-first-history';
+import { useNavigate } from 'react-router-dom';
+import { RESULT_INFO } from '@constants/index';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks';
+import { history } from '@redux/configure-store';
 
 import style from './result-bkock.module.scss';
+import { addUserThunk, setErrors } from '@redux/reducers/header-slice';
 
 interface IResultBlock {
     statusCode?: number | string;
@@ -12,10 +15,23 @@ interface IResultBlock {
 export const ResultBlock = ({ statusCode } : IResultBlock) => {
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const location = history.location;
+
     const result = RESULT_INFO.find((el) => el.statusCode === statusCode);
 
     const handleButtonClick = () => {
-        if (result) dispatch(push(result.redirect));
+        if (result) {
+            dispatch(setErrors(null));
+            navigate(result.redirect);
+
+            if (location.pathname === '/result/error' &&
+                result.redirect === '/auth/registration') {
+                const data = JSON.parse(sessionStorage.registerData);
+                dispatch(addUserThunk({ data }))
+            }
+        }
     };
 
     return (

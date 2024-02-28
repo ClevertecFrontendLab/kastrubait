@@ -1,20 +1,60 @@
-import React from 'react';
-// import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { useEffect } from 'react';
 import { Space, Button, Form, Input } from 'antd';
 import Google from '@public/assets/icons/google.svg';
+import { push } from 'redux-first-history';
+import {useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { IAuthUser } from 'src/interfaces/auth-user';
+import { addUserThunk, setUserData } from '@redux/reducers/header-slice';
+import { AUTH_STATUS, PATH } from '@constants/index';
+
 
 import 'antd/dist/antd.css';
 import style from './form.module.scss';
 
+export const RegisterForm = () => {
 
-export const RegisterForm: React.FC = () => {
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-  };
+    const dispatch = useAppDispatch();
+    const { responseCode, error } = useAppSelector(state => state.header);
+    const [form] = Form.useForm();
+
+    const onFinish = (values: any) => {
+        const { email, password } = values;
+        const data: IAuthUser = {
+            email: email,
+            password: password,
+        }
+        sessionStorage.setItem('registerData', JSON.stringify(data));
+        dispatch(setUserData( { data }));
+        dispatch(addUserThunk({ data }))
+    };
+
+    const handleButtonClick = () => {
+            form.validateFields().then().catch(err => console.log( 'err', err))
+        };
+
+    useEffect(() => {
+        if (
+            error?.statusCode !== null
+        ) {
+            switch (error?.route) {
+                case 'registration':
+                    if (error?.statusCode === AUTH_STATUS.ERROR_409) {
+                        dispatch(push(`${PATH.RESULT}/${PATH.ERROR_USER_EXIT}`, {fromServer: true}));
+                        break;
+                    }
+                    dispatch(push(`${PATH.RESULT}/${PATH.ERROR}`, {fromServer: true}));
+                    break;
+                }
+        }
+        if (responseCode === 201) {
+            dispatch(push(`${PATH.RESULT}/${PATH.SUCCESS}`, {fromServer: true}));
+        }
+    }, [error, responseCode, dispatch] );
 
   return (
     <Form
       name='normal_login'
+      form={form}
       className={style['form_auth']}
       initialValues={{ remember: true }}
       onFinish={onFinish}
@@ -88,7 +128,7 @@ export const RegisterForm: React.FC = () => {
         type={'primary'}
         htmlType={'submit'}
         size='large' block
-        // onClick={handleButtonClick}
+        onClick={handleButtonClick}
         // disabled={errors.length !== 0}
         >
             Войти

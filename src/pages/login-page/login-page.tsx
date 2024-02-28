@@ -22,7 +22,6 @@ export const LoginPage = ({ type } : ITypeForm) => {
     const dispatch = useAppDispatch();
 
     const callbackTabClicked = (key: string) => {
-        console.log(key);
         switch (key) {
             case 'signup':
                 dispatch(push(`${PATH.AUTH}/${PATH.SIGN_UP}`));
@@ -37,7 +36,6 @@ export const LoginPage = ({ type } : ITypeForm) => {
         <div className={style['form_container']}>
             <img src={src} className={style['form_container_logo']} />
 
-            {/* <div className={style['tab_container']}> */}
                 <Tabs
                     type='line'
                     defaultActiveKey={type}
@@ -48,7 +46,6 @@ export const LoginPage = ({ type } : ITypeForm) => {
                     onTabClick={callbackTabClicked}
                     className={style['form_container_tabs']}
                 />
-            {/* </div> */}
         </div>
     );
 };

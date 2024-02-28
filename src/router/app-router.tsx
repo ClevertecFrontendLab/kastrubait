@@ -21,7 +21,7 @@ export const AppRouter = () => {
     const dispatch = useAppDispatch();
     const isAuthUser = useAppSelector((state) => state.header.isAuthUser);
     const error = useAppSelector((state) => state.header.error);
-    // const status = useAppSelector((state) => state.header.status);
+    const status = useAppSelector((state) => state.header.status);
 
     const isError = error?.statusCode === unAuthorized;
 
@@ -44,9 +44,9 @@ export const AppRouter = () => {
         console.log('Current location is ', location);
       }, [location]);
 
-    // if (status === LOADING_TRUE) {
-    //     return <Loader />;
-    //   }
+    if (status === LOADING_TRUE) {
+        return <Loader />;
+      }
 
     return isAuthUser ? (
         //PrivateRoutes

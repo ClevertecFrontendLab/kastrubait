@@ -13,19 +13,14 @@ export const addUserThunk = createAsyncThunk(
             const response = await ApiService.registration({ data });
             thunkAPI.dispatch(setResponseCode(201));
             return response;
-        } catch (err) {
-            if (err instanceof AxiosError) {
-                const errorResponse: IErrorPayload = {
-                    statusCode: err?.response?.status || 500,
-                    error: err?.response?.data?.error,
-                    message: err?.response?.data?.message,
-                    route: 'registration',
-                };
-                ErrorHandle(errorResponse);
-            }
-            if (err instanceof Error) {
-                return thunkAPI.rejectWithValue(err.message);
-            }
+        } catch (err: any) {
+            const errorResponse: IErrorPayload = {
+                statusCode: err?.response?.status || 500,
+                error: err?.response?.data?.error,
+                message: err?.response?.data?.message,
+                route: 'registration',
+            };
+            return thunkAPI.rejectWithValue(errorResponse);
         }
     },
 );
@@ -39,19 +34,14 @@ export const authUserThunk = createAsyncThunk(
             thunkAPI.dispatch(setResponseCode(200));
             thunkAPI.dispatch(setUserData(params));
             return response;
-        } catch (err) {
-            if (err instanceof AxiosError) {
-                const errorResponse: IErrorPayload = {
-                    statusCode: err?.response?.status || 500,
-                    error: err?.response?.data?.error || 'Unknown Error',
-                    message: err?.response?.data?.message || 'An error occurred',
-                    route: 'login',
-                };
-                ErrorHandle(errorResponse);
-            }
-            if (err instanceof Error) {
-                return thunkAPI.rejectWithValue(err.message);
-            }
+        } catch (err: any) {
+            const errorResponse: IErrorPayload = {
+                statusCode: err?.response?.status || 500,
+                error: err?.response?.data?.error || 'Unknown Error',
+                message: err?.response?.data?.message || 'An error occurred',
+                route: 'login',
+            };
+            return thunkAPI.rejectWithValue(errorResponse);
         }
     },
 );
@@ -63,19 +53,15 @@ export const checkEmailThunk = createAsyncThunk(
             const response = await ApiService.checkEmail(params);
             thunkAPI.dispatch(setResponseCode(200));
             return response;
-        } catch (err) {
-            if (err instanceof AxiosError) {
-                const errorResponse: IErrorPayload = {
-                    statusCode: err?.response?.status || 500,
-                    error: err?.response?.data?.error,
-                    message: err?.response?.data?.message,
-                    route: 'checkEmail',
-                };
-                ErrorHandle(errorResponse);
-            }
-            if (err instanceof Error) {
-                return thunkAPI.rejectWithValue(err.message);
-            }
+        } catch (err: any) {
+            const errorResponse: IErrorPayload = {
+                statusCode: err?.response?.status || 500,
+                error: err?.response?.data?.error,
+                message: err?.response?.data?.message,
+                route: 'checkEmail',
+            };
+
+            return thunkAPI.rejectWithValue(errorResponse);
         }
     },
 );
@@ -87,19 +73,14 @@ export const confirmEmailThunk = createAsyncThunk(
             const response = await ApiService.confirmEmail(params);
             thunkAPI.dispatch(setResponseCode(200));
             return response;
-        } catch (err) {
-            if (err instanceof AxiosError) {
-                const errorResponse: IErrorPayload = {
-                    statusCode: err?.response?.status || 500,
-                    error: err?.response?.data?.error,
-                    message: err?.response?.data?.message,
-                    route: 'confirmEmail',
-                };
-                ErrorHandle(errorResponse);
-            }
-            if (err instanceof Error) {
-                return thunkAPI.rejectWithValue(err.message);
-            }
+        } catch (err: any) {
+            const errorResponse: IErrorPayload = {
+                statusCode: err?.response?.status || 500,
+                error: err?.response?.data?.error,
+                message: err?.response?.data?.message,
+                route: 'confirmEmail',
+            };
+            return thunkAPI.rejectWithValue(errorResponse);
         }
     },
 );
@@ -111,19 +92,14 @@ export const changePasswordThunk = createAsyncThunk(
             const response = await ApiService.changePassword(params);
             thunkAPI.dispatch(setResponseCode(201));
             return response;
-        } catch (err) {
-            if (err instanceof AxiosError) {
-                const errorResponse: IErrorPayload = {
-                    statusCode: err?.response?.status || 500,
-                    error: err?.response?.data?.error,
-                    message: err?.response?.data?.message,
-                    route: 'changePassword',
-                };
-                ErrorHandle(errorResponse);
-            }
-            if (err instanceof Error) {
-                return thunkAPI.rejectWithValue(err.message);
-            }
+        } catch (err: any) {
+            const errorResponse: IErrorPayload = {
+                statusCode: err?.response?.status || 500,
+                error: err?.response?.data?.error,
+                message: err?.response?.data?.message,
+                route: 'changePassword',
+            };
+            return thunkAPI.rejectWithValue(errorResponse);
         }
     },
 );

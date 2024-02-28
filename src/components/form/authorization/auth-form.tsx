@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Space, Button, Checkbox, Form, Input } from 'antd';
 import Google from '@public/assets/icons/google.svg';
+import { push } from 'redux-first-history';
 import {useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { authUserThunk } from '@redux/reducers/header-slice';
 import { history } from '@redux/configure-store';
+import { IAuthUser } from 'src/interfaces/auth-user';
+import { PATH } from '@constants/index';
 
 import 'antd/dist/antd.css';
 import style from './form.module.scss';
-import { IAuthUser } from 'src/interfaces/auth-user';
 
 interface IFormValues {
     email: string;
@@ -16,29 +18,48 @@ interface IFormValues {
 }
 
 export const AuthForm: React.FC = () => {
+
+    const location = history.location;
     const dispatch = useAppDispatch();
-    const prev = useAppSelector(state => state.router.previousLocations)
+    const { responseCode, error } = useAppSelector(state => state.header);
+
     const [form] = Form.useForm();
 
-    const onFinish = (values: IFormValues) => {
-    const { email, password, rememberMe } = values;
-    const data: IAuthUser = {
-        email: email,
-        password: password,
-    }
+    const [emailValidStatus, setEmailValidStatus] = useState<boolean>(false);
 
-    dispatch(authUserThunk({ data, rememberMe}))
-  };
+    const onFinish = (values: IFormValues) => {
+        const { email, password, rememberMe } = values;
+        const data: IAuthUser = {
+            email: email,
+            password: password,
+        }
+
+        dispatch(authUserThunk({ data, rememberMe}))
+    };
+
+    const handleForgotPass = () => {
+        if (emailValidStatus) {
+            const values = form.getFieldsValue();
+            console.log('forgot_password ', values);
+            // repeatRegister(values);
+            // getCheckEmail(values);
+        }
+    };
 
     const handleButtonClick = () => {
         form.validateFields().then().catch(err => console.log(err))
     };
 
-    const location = history.location;
-
     useEffect(() => {
-        console.log('Current location is ', location);
-    }, [location, prev]);
+        switch (error?.route) {
+            case 'login':
+                dispatch(push(`${PATH.RESULT}/${PATH.ERROR_LOGIN}`, {fromServer: true}));
+                break;
+            }
+        if (responseCode === 200) {
+            dispatch(push(`${PATH.RESULT}/${PATH.SUCCESS}`, {fromServer: true}));
+        }
+        }, [error, responseCode, dispatch] );
 
   return (
     <Form
@@ -47,7 +68,7 @@ export const AuthForm: React.FC = () => {
       autoComplete='off'
       scrollToFirstError
       className={style['form_auth']}
-      initialValues={{ rememberMe: true }}
+      initialValues={{ remember: true }}
       onFinish={onFinish}
     >
       <Form.Item
@@ -56,7 +77,19 @@ export const AuthForm: React.FC = () => {
             {
                 required: true,
                 type: 'email',
-                message: 'Не верный формат email',
+                message: 'Не верный формат email'
+                // validator: (_, value) => {
+                //     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+                //     const isValidEmail = emailPattern.test(value);
+
+                //     setEmailValidStatus(isValidEmail);
+
+                //     if (isValidEmail) {
+                //         return Promise.resolve();
+                //     } else {
+                //         return Promise.reject(new Error('Не верный формат email'));
+                //     }
+                // },
             },
         ]}
       >
@@ -95,7 +128,7 @@ export const AuthForm: React.FC = () => {
         <Button
             data-test-id='login-forgot-button'
             type={'link'}
-            // onClick={verifyCheckEmail}
+            onClick={handleForgotPass}
             // disabled
         >
             Забыли пароль?
