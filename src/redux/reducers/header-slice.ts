@@ -1,0 +1,208 @@
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ApiService } from '../../api/api-service.ts';
+import {
+    IUpdateUserSlice,
+    IErrorPayload,
+    IHeaderState,
+    ICheckEmailSlice,
+    IConfirmEmailSlice,
+    IChangePassSlice } from '../../interfaces/auth-user.ts';
+import * as jose from 'jose';
+
+export const addUserThunk = createAsyncThunk(
+    'header/registrationStatus',
+    async ({ data }: IUpdateUserSlice, thunkAPI) => {
+        try {
+            const response = await ApiService.registration({ data });
+            thunkAPI.dispatch(setResponseCode(201));
+            thunkAPI.dispatch(setResponseRoute('registration'));
+            return response;
+        } catch (err: any) {
+            const errorResponse: IErrorPayload = {
+                statusCode: err?.response?.status || 500,
+                error: err?.response?.data?.error,
+                message: err?.response?.data?.message,
+                route: 'registration',
+            };
+            return thunkAPI.rejectWithValue(errorResponse);
+        }
+    },
+);
+
+export const authUserThunk = createAsyncThunk(
+    'header/authorizationStatus',
+    async (params: IUpdateUserSlice, thunkAPI) => {
+        try {
+            const { data } = params
+            const response = await ApiService.authorization({ data });
+            thunkAPI.dispatch(setResponseCode(200));
+            thunkAPI.dispatch(setUserData(params));
+            thunkAPI.dispatch(setResponseRoute('login'));
+            return response;
+        } catch (err: any) {
+            const errorResponse: IErrorPayload = {
+                statusCode: err?.response?.status || 500,
+                error: err?.response?.data?.error || 'Unknown Error',
+                message: err?.response?.data?.message || 'An error occurred',
+                route: 'login',
+            };
+            return thunkAPI.rejectWithValue(errorResponse);
+        }
+    },
+);
+
+export const checkEmailThunk = createAsyncThunk(
+    'header/checkEmailStatus',
+    async (params: ICheckEmailSlice, thunkAPI) => {
+        try {
+            const response = await ApiService.checkEmail(params);
+            thunkAPI.dispatch(setResponseCode(200));
+            thunkAPI.dispatch(setResponseRoute('checkEmail'));
+            return response;
+        } catch (err: any) {
+            const errorResponse: IErrorPayload = {
+                statusCode: err?.response?.status || 500,
+                error: err?.response?.data?.error,
+                message: err?.response?.data?.message,
+                route: 'checkEmail',
+            };
+
+            return thunkAPI.rejectWithValue(errorResponse);
+        }
+    },
+);
+
+export const confirmEmailThunk = createAsyncThunk(
+    'header/checkEmailStatus',
+    async (params: IConfirmEmailSlice, thunkAPI) => {
+        try {
+            const response = await ApiService.confirmEmail(params);
+            thunkAPI.dispatch(setResponseCode(200));
+            thunkAPI.dispatch(setResponseRoute('confirmEmail'));
+            return response;
+        } catch (err: any) {
+            const errorResponse: IErrorPayload = {
+                statusCode: err?.response?.status || 500,
+                error: err?.response?.data?.error,
+                message: err?.response?.data?.message,
+                route: 'confirmEmail',
+            };
+            return thunkAPI.rejectWithValue(errorResponse);
+        }
+    },
+);
+
+export const changePasswordThunk = createAsyncThunk(
+    'header/changePasswordStatus',
+    async (params: IChangePassSlice, thunkAPI) => {
+        try {
+            const response = await ApiService.changePassword(params);
+            thunkAPI.dispatch(setResponseCode(201));
+            thunkAPI.dispatch(setResponseRoute('changePassword'));
+            return response;
+        } catch (err: any) {
+            const errorResponse: IErrorPayload = {
+                statusCode: err?.response?.status || 500,
+                error: err?.response?.data?.error,
+                message: err?.response?.data?.message,
+                route: 'changePassword',
+            };
+            return thunkAPI.rejectWithValue(errorResponse);
+        }
+    },
+);
+
+const initialState: IHeaderState = {
+    isAuthUser: false,
+    userLogin: '',
+    password: '',
+    rememberMe: false,
+    responseCode: 0,
+    responseRoute:null,
+    status: null,
+    error: null,
+};
+export const headerSlice = createSlice({
+    name: 'header',
+
+    initialState,
+    reducers: {
+        logOutUser: (state) => {
+            state.isAuthUser = false;
+            localStorage.removeItem('token');
+            localStorage.removeItem('userLogin');
+        },
+        setIsAuthUser: (state, action: PayloadAction<boolean>) => {
+            state.isAuthUser = action.payload;
+        },
+        setStatus: (state, action: PayloadAction<string | null>) => {
+            state.status = action.payload;
+        },
+        setResponseCode: (state, action: PayloadAction<number>) => {
+            state.responseCode = action.payload;
+        },
+        setResponseRoute: (state, action: PayloadAction<string | null>) => {
+            state.responseRoute = action.payload;
+        },
+        setUserData: (state, action: PayloadAction<IUpdateUserSlice>) => {
+            state.userLogin = action.payload.data.email;
+            state.password = action.payload.data.password;
+            state.rememberMe = action.payload.rememberMe as boolean;
+        },
+        setErrors: (state, action: PayloadAction<IErrorPayload | null>) => {
+            state.error = action.payload;
+        },
+    },
+
+    extraReducers: (builder) => {
+        //addUserThunk
+        builder
+            .addCase(addUserThunk.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(addUserThunk.fulfilled, (state, action) => {
+                state.status = 'resolved';
+                state.userLogin = action.payload.email;
+                localStorage.setItem('userLogin', action.payload.email);
+                state.isAuthUser = false;
+                state.status = null;
+            })
+            .addCase(addUserThunk.rejected, (state, action) => {
+                state.status = 'rejected';
+                state.error = action.payload as IErrorPayload;
+            });
+
+        //authUserThunk
+        builder
+            .addCase(authUserThunk.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(authUserThunk.fulfilled, (state, action) => {
+                state.status = 'resolved';
+                if (state.rememberMe) {
+                    localStorage.setItem('token', action.payload.accessToken);
+                    state.userLogin = localStorage.getItem('userLogin');
+                    if (action.payload.accessToken && !state.userLogin) {
+                        const claims = jose.decodeJwt(action.payload.accessToken);
+                        state.userLogin = claims.email as string;
+                        localStorage.setItem('userLogin', state.userLogin);
+                    }
+                } else {
+                    sessionStorage.setItem('token', action.payload.accessToken);
+                }
+                state.isAuthUser = true;
+                state.status = null;
+            })
+            .addCase(authUserThunk.rejected, (state, action) => {
+                state.status = 'rejected';
+                state.isAuthUser = false;
+                state.error = action.payload as IErrorPayload;
+            });
+    },
+});
+
+export const { logOutUser, setIsAuthUser, setStatus, setErrors, setResponseCode, setResponseRoute,setUserData } = headerSlice.actions;
+
+export default headerSlice.reducer;

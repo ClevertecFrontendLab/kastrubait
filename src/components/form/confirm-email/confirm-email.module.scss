@@ -1,0 +1,78 @@
+@use '@styles/abstracts/variables' as *;
+@use '@styles/abstracts/colors' as *;
+@use '@styles/abstracts/breakpoints' as *;
+
+.confirm_block {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: start;
+
+    width: 539px;
+    padding: $padding-xxl $padding-xl;
+
+    border-radius: 2px;
+    box-shadow: $shadow-a;
+    background: $character-light-primary-inverse;
+}
+
+.confirm_notification {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.container {
+    width: fit-content;
+}
+
+.character {
+    width: 40px;
+    height: 40px;
+    border: 1px solid $character-light-border;
+    border-radius: 2px;
+    font-size: 24px;
+    line-height: 29px;
+    padding: 5px 12px;
+    background: $character-light-background;
+}
+
+.character_error {
+    width: 40px;
+    height: 40px;
+    border: 1px solid $character-light-error;
+    border-radius: 2px;
+    font-size: 24px;
+    line-height: 30px;
+    padding: 5px 12px;
+    background: $character-light-background;
+}
+
+@include md_max {
+    .confirm_block {
+        padding: $padding-xl 10px;
+    }
+}
+
+:global {
+    .ant-result {
+        padding: 0;
+        max-width: 368px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .ant-result-title {
+        line-height: 1.4;
+    }
+
+    .ant-result-subtitle {
+        line-height: 1.2;
+    }
+
+    .ant-result-extra {
+        margin: $padding-l $padding-xl 0;
+    }
+}

@@ -4,19 +4,18 @@ $lg_max: 1200px;
 
 @mixin lg_max {
     @media only screen and (max-width: $lg_max) {
-      @content;
+        @content;
     }
-  }
+}
 
 @mixin md_max {
     @media only screen and (max-width: $md_max) {
-      @content;
+        @content;
     }
-  }
+}
 
-
-  @mixin sm_max {
+@mixin sm_max {
     @media only screen and (max-width: $sm_max) {
-      @content;
+        @content;
     }
-  }
+}

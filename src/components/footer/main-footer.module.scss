@@ -4,18 +4,10 @@
 
 .main_footer {
     display: flex;
-    margin-bottom: 42px;
-    margin-right: 24px;
+    margin: 24px;
+    padding: 0 24px;
     justify-content: space-between;
-    align-items: end;
-    height: calc(283px + 42px);
-    @media (max-width: 991px) {
-        height: calc(364px + 42px);
-    }
-    @include md_max {
-        flex-direction: column-reverse;
-        height: calc(212px + 42px);
-    }
+    align-items: flex-end;
 
     & button.footer_review {
         margin-left: 24px;
@@ -33,37 +25,34 @@
         }
         @include md_max {
             margin: 24px 16px 42px;
-            height: 40px;
+            height: 20px;
             width: calc(100% - 32px);
         }
     }
 
-    & div.ant-card.footer_card {
-        width: 240px;
-        height: 127px;
+    & .footer_card {
+        max-width: 300px;
+        width: 100%;
         border-radius: 2px;
         box-shadow: $shadow-c;
-        background: var($character-light-primary-inverse);
+        background: $character-light-primary-inverse;
         & .ant-card-body {
             padding: 12px;
         }
         @include md_max {
             margin: 16px;
-            width: calc(100% - 32px);
+            max-width: 100%;
         }
     }
 
     & .card_title {
-        // margin-top: 12px ;
         margin-bottom: 8px;
         font-family: $font-family;
         font-size: 16px;
         font-weight: 400;
         line-height: 130%;
         color: $primary-light-6;
-        & p {
-            text-align: center;
-        }
+        text-align: center;
     }
 
     & .card_text {
@@ -73,6 +62,7 @@
         font-weight: 400;
         line-height: 130%;
         color: $character-light-secondary-45;
+        text-align: center;
     }
 
     .card_fone {
@@ -92,5 +82,14 @@
             color: $character-light-title-85;
         }
     }
+}
 
+@include md_max {
+    .main_footer {
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 24px;
+        padding: 0 24px;
+        margin-top: 0;
+    }
 }

@@ -1,5 +1,5 @@
 @use '@styles/abstracts/variables' as *;
-@use './styles/abstracts/colors' as *;
+@use '@styles/abstracts/colors' as *;
 
 :global {
     .ant-layout-header {
@@ -24,15 +24,39 @@
     }
 }
 
-.app_container{
+.main_container,
+.auth_container {
     display: flex;
-    align-items: start;
+    justify-content: center;
+    width: 100%;
     max-width: $screen-xxl;
 }
 
-.app_content {
+.main_container {
+    align-items: start;
+}
+
+.main_content {
     min-height: 100vh;
     background: #363950 url('@public/assets/images/bg-mp-light.jpg') no-repeat center/cover;
 }
 
+.auth_container_bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background: #363950 url('@public/assets/images/bg-lp-light.jpg') no-repeat center/cover;
 
+    &__mask {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        backdrop-filter: blur(5px);
+        background: rgba(121, 156, 212, 0.5);
+        padding: 0 16px;
+    }
+}

@@ -1,0 +1,45 @@
+@use '@styles/abstracts/variables' as *;
+@use '@styles/abstracts/colors' as *;
+
+:global {
+    .ant-result {
+        padding: 0;
+        max-width: 368px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .ant-result-title {
+        line-height: 1.4;
+    }
+
+    .ant-result-subtitle {
+        line-height: 1.2;
+    }
+
+    .ant-btn {
+        width: 100%;
+        font-size: 14px;
+
+        &.ant-btn-primary {
+            border-color: $primary-light-6;
+            background: $primary-light-6;
+
+            span {
+                color: $character-light-primary-inverse;
+            }
+        }
+    }
+}
+
+.result_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: $padding-xxl $padding-xl;
+    width: 539px;
+    border-radius: 2px;
+
+    background: $character-light-primary-inverse;
+    box-shadow: $shadow-a;
+}
