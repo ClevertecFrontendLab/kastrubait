@@ -2,7 +2,6 @@
 @use '@styles/abstracts/colors' as *;
 @use '@styles/abstracts/breakpoints' as *;
 
-
 .form_auth {
     :global {
         .ant-form-item {
@@ -37,7 +36,6 @@
 
     :global {
         .ant-btn {
-
             @include sm_max {
                 font-size: 14px;
             }
@@ -63,7 +61,6 @@
                 color: $character-light-primary-inverse;
             }
         }
-
     }
 }
 
@@ -82,14 +79,13 @@
 
             &.ant-btn-link > span {
                 color: $primary-light-6;
-           }
+            }
 
             @include sm_max {
                 padding-right: 7px;
                 font-size: 14px;
             }
         }
-
     }
 }
 

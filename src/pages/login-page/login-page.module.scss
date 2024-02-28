@@ -1,10 +1,9 @@
 @use '@styles/abstracts/variables' as *;
 @use '@styles/abstracts/colors' as *;
-@use '@styles/abstracts/breakpoints' as*;
+@use '@styles/abstracts/breakpoints' as *;
 
 .form_container_tabs {
     :global {
-
         .ant-tabs-nav-wrap {
             justify-content: center;
         }
@@ -52,7 +51,7 @@
     }
 }
 
-.form_container{
+.form_container {
     display: flex;
     flex-flow: column;
     align-items: center;

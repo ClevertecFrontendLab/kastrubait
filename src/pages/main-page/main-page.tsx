@@ -20,24 +20,24 @@ export const MainPage: React.FC = () => {
 
     return (
         <div className={style['main_content']}>
-            <Card bordered={false} className={style['main_text_card']}>
+            <Card bordered={false} className='main_text_card'>
                 <p>С CleverFit ты сможешь:</p>
                 <p>— планировать свои тренировки на календаре, выбирая тип и уровень нагрузки;</p>
                 <p>— отслеживать свои достижения в разделе статистики, сравнивая свои результаты с нормами и рекордами;</p>
                 <p>— создавать свой профиль, где ты можешь загружать свои фото, видео и отзывы о тренировках;</p>
                 <p>— выполнять расписанные тренировки для разных частей тела, следуя подробным инструкциям и советам профессиональных тренеров.</p>
             </Card>
-            <Card bordered={false} className={style['main_text_promo']}>
+            <Card bordered={false} className='main_text_promo'>
                 <p>CleverFit — это не просто приложение, а твой личный помощник в мире фитнеса. Не откладывай на завтра — начни тренироваться уже сегодня!</p>
             </Card>
-            <div className={style['cards_block']}>
-                <Card title="Расписать тренировки" bordered={false} className={style['cards_btn']}>
+            <div className='cards_block'>
+                <Card title="Расписать тренировки" bordered={false} className='cards_btn'>
                     <Button type='text' icon={<HeartFilled />}>Тренировки</Button>
                 </Card>
-                <Card title="Назначить календарь" bordered={false} className={style['cards_btn']}>
+                <Card title="Назначить календарь" bordered={false} className='cards_btn'>
                     <Button type='text' icon={<CalendarIcon/>}>Календарь</Button>
                 </Card>
-                <Card title="Заполнить профиль" bordered={false} className={style['cards_btn']}>
+                <Card title="Заполнить профиль" bordered={false} className='cards_btn'>
                     <Button type='text' icon={<IdcardOutlined />}>Профиль</Button>
                 </Card>
             </div>

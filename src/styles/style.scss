@@ -1,4 +1,4 @@
-@use "abstracts";
+@use 'abstracts';
 
 // @import 'abstracts/colors';
 // @import 'abstracts/variables';
@@ -6,4 +6,4 @@
 
 @function mult-2($number) {
     @return $number * 2;
-  }
+}
