@@ -3,7 +3,7 @@ import { Space, Button, Checkbox, Form, Input } from 'antd';
 import Google from '@public/assets/icons/google.svg';
 import { push } from 'redux-first-history';
 import {useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { authUserThunk } from '@redux/reducers/header-slice';
+import { authUserThunk, checkEmailThunk } from '@redux/reducers/header-slice';
 import { history } from '@redux/configure-store';
 import { IAuthUser } from 'src/interfaces/auth-user';
 import { PATH } from '@constants/index';
@@ -21,11 +21,11 @@ export const AuthForm: React.FC = () => {
 
     const location = history.location;
     const dispatch = useAppDispatch();
-    const { responseCode, error } = useAppSelector(state => state.header);
+    const { responseCode, responseRoute, error } = useAppSelector(state => state.header);
 
     const [form] = Form.useForm();
 
-    const [emailValidStatus, setEmailValidStatus] = useState<boolean>(false);
+    const [email, setEmail] = useState<string>('');
 
     const onFinish = (values: IFormValues) => {
         const { email, password, rememberMe } = values;
@@ -38,11 +38,10 @@ export const AuthForm: React.FC = () => {
     };
 
     const handleForgotPass = () => {
-        if (emailValidStatus) {
-            const values = form.getFieldsValue();
-            console.log('forgot_password ', values);
-            // repeatRegister(values);
-            // getCheckEmail(values);
+        if (email) {
+            // const values = form.getFieldsValue();
+
+            dispatch(checkEmailThunk( { email } ));
         }
     };
 
@@ -55,9 +54,25 @@ export const AuthForm: React.FC = () => {
             case 'login':
                 dispatch(push(`${PATH.RESULT}/${PATH.ERROR_LOGIN}`, {fromServer: true}));
                 break;
+            case 'checkEmail':
+                if (error?.statusCode === 404 && error?.message === 'Email не найден') {
+                    dispatch(push(`${PATH.RESULT}/${PATH.ERROR_CHECK_EMAIL_NO_EXIST}`, {fromServer: true}));
+                    break;
+                }
+                dispatch(push(`${PATH.RESULT}/${PATH.ERROR_CHECK_EMAIL}`, {fromServer: true}));
+                break;
+            case 'changePassword':
+                dispatch(push(`${PATH.RESULT}/${PATH.ERROR_CHANGE_PASSWORD}`, {fromServer: true}));
+                break;
             }
-        if (responseCode === 200) {
+        if (responseCode === 200 && responseRoute === 'login') {
             dispatch(push(`${PATH.RESULT}/${PATH.SUCCESS}`, {fromServer: true}));
+        }
+        if (responseCode === 200 && responseRoute === 'checkEmail') {
+            dispatch(push(`${PATH.AUTH}/${PATH.CHANGE_PASSWORD}`, {fromServer: true}));
+        }
+        if (responseCode === 201 && responseRoute === 'changePassword') {
+            dispatch(push(`${PATH.RESULT}/${PATH.SUCCESS_CHANGE_PASSWORD}`, {fromServer: true}));
         }
         }, [error, responseCode, dispatch] );
 
@@ -77,20 +92,16 @@ export const AuthForm: React.FC = () => {
             {
                 required: true,
                 type: 'email',
-                message: 'Не верный формат email'
-                // validator: (_, value) => {
-                //     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-                //     const isValidEmail = emailPattern.test(value);
-
-                //     setEmailValidStatus(isValidEmail);
-
-                //     if (isValidEmail) {
-                //         return Promise.resolve();
-                //     } else {
-                //         return Promise.reject(new Error('Не верный формат email'));
-                //     }
-                // },
-            },
+                // message: 'Не верный формат email'
+                validator(_, value) {
+                    if (String(value).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+                        setEmail(value);
+                        return Promise.resolve();
+                    } else {
+                        setEmail('')
+                        return Promise.reject();
+                    }
+            },}
         ]}
       >
         <Input

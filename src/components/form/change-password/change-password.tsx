@@ -1,22 +1,44 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { push } from 'redux-first-history';
 import { Button, Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
 import { IChangePassSlice } from 'src/interfaces/auth-user';
-import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 
 import style from './chanhe-password.module.scss';
+import { changePasswordThunk } from '@redux/reducers/header-slice';
+import { PATH } from '@constants/index';
 
 export const ChangePassword = () => {
     const [form] = Form.useForm<IChangePassSlice>();
-    const { userLogin } = useAppSelector(state => state.header);
+    const { responseCode, responseRoute, error } = useAppSelector(state => state.header);
 
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const onFinish = (values: IChangePassSlice) => {
-        // repeatRegister({ userLogin, password: values.password });
+        const { password, confirmPassword } = values;
+        const data: IChangePassSlice = {
+            password: password,
+            confirmPassword: confirmPassword
+        }
+        dispatch(changePasswordThunk( data ))
     };
+
+    useEffect(() => {
+        switch (error?.route) {
+            case 'changePassword':
+                dispatch(push(`${PATH.RESULT}/${PATH.ERROR_CHANGE_PASSWORD}`, {fromServer: true}));
+                navigate(`${PATH.RESULT}/${PATH.ERROR_CHANGE_PASSWORD}`);
+                break;
+        }
+        if (responseCode === 201 && responseRoute === 'changePassword') {
+            dispatch(push(`${PATH.RESULT}/${PATH.SUCCESS_CHANGE_PASSWORD}`, {fromServer: true}));
+        }
+    }, [error, responseCode, responseRoute, navigate, dispatch] );
+
 
     return (
         <div className={style['change_password_container']}>

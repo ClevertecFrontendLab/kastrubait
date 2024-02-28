@@ -42,6 +42,7 @@ export interface IHeaderState {
     password: string | null;
     rememberMe: boolean;
     responseCode: number;
+    responseRoute: string | null;
     status: string | null;
     error: IErrorPayload | null;
 

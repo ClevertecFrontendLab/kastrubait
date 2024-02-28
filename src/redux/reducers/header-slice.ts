@@ -1,9 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AxiosError } from 'axios';
-// import { push } from 'redux-first-history';
 import { ApiService } from '../../api/api-service.ts';
-import { ErrorHandle } from '../../api/error-handle.ts';
-import { IUpdateUserSlice, IErrorPayload, IHeaderState, ICheckEmailSlice, IConfirmEmailSlice, IChangePassSlice } from '../../interfaces/auth-user.ts';
+import {
+    IUpdateUserSlice,
+    IErrorPayload,
+    IHeaderState,
+    ICheckEmailSlice,
+    IConfirmEmailSlice,
+    IChangePassSlice } from '../../interfaces/auth-user.ts';
 import * as jose from 'jose';
 
 export const addUserThunk = createAsyncThunk(
@@ -12,6 +15,7 @@ export const addUserThunk = createAsyncThunk(
         try {
             const response = await ApiService.registration({ data });
             thunkAPI.dispatch(setResponseCode(201));
+            thunkAPI.dispatch(setResponseRoute('registration'));
             return response;
         } catch (err: any) {
             const errorResponse: IErrorPayload = {
@@ -33,6 +37,7 @@ export const authUserThunk = createAsyncThunk(
             const response = await ApiService.authorization({ data });
             thunkAPI.dispatch(setResponseCode(200));
             thunkAPI.dispatch(setUserData(params));
+            thunkAPI.dispatch(setResponseRoute('login'));
             return response;
         } catch (err: any) {
             const errorResponse: IErrorPayload = {
@@ -52,6 +57,7 @@ export const checkEmailThunk = createAsyncThunk(
         try {
             const response = await ApiService.checkEmail(params);
             thunkAPI.dispatch(setResponseCode(200));
+            thunkAPI.dispatch(setResponseRoute('checkEmail'));
             return response;
         } catch (err: any) {
             const errorResponse: IErrorPayload = {
@@ -72,6 +78,7 @@ export const confirmEmailThunk = createAsyncThunk(
         try {
             const response = await ApiService.confirmEmail(params);
             thunkAPI.dispatch(setResponseCode(200));
+            thunkAPI.dispatch(setResponseRoute('confirmEmail'));
             return response;
         } catch (err: any) {
             const errorResponse: IErrorPayload = {
@@ -91,6 +98,7 @@ export const changePasswordThunk = createAsyncThunk(
         try {
             const response = await ApiService.changePassword(params);
             thunkAPI.dispatch(setResponseCode(201));
+            thunkAPI.dispatch(setResponseRoute('changePassword'));
             return response;
         } catch (err: any) {
             const errorResponse: IErrorPayload = {
@@ -110,6 +118,7 @@ const initialState: IHeaderState = {
     password: '',
     rememberMe: false,
     responseCode: 0,
+    responseRoute:null,
     status: null,
     error: null,
 };
@@ -131,6 +140,9 @@ export const headerSlice = createSlice({
         },
         setResponseCode: (state, action: PayloadAction<number>) => {
             state.responseCode = action.payload;
+        },
+        setResponseRoute: (state, action: PayloadAction<string | null>) => {
+            state.responseRoute = action.payload;
         },
         setUserData: (state, action: PayloadAction<IUpdateUserSlice>) => {
             state.userLogin = action.payload.data.email;
@@ -191,6 +203,6 @@ export const headerSlice = createSlice({
     },
 });
 
-export const { logOutUser, setIsAuthUser, setStatus, setErrors, setResponseCode, setUserData } = headerSlice.actions;
+export const { logOutUser, setIsAuthUser, setStatus, setErrors, setResponseCode, setResponseRoute,setUserData } = headerSlice.actions;
 
 export default headerSlice.reducer;
